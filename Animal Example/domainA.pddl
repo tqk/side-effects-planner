@@ -1,30 +1,38 @@
 (define (domain AnimalExample-d)
     (:requirements :strips :typing )
     (:types
-        animal others - object
+        animal 
+        others
         grid
-        constant
+        numbers
+        constant 
+        num   
     )
     (:constants
+        ; 3x4 grids
         G11 G12 G13 G14 - grid
         G21 G22 G23 G24 - grid
         G31 G32 G33 G34 - grid
         Tree Wood Fountain Factory Truck - others
         Beaver Racoon - animal
-        N0 N1 N2 N3 - constant
+        N0 N1 N2 N3 - constant ; constant is used to count the number of times, that truck can clean the polluted grid
+        C0 C1 C2 C3 C4 C5 C6 - num ; num is used to count the number of polluted grid
+        C7 C8 C9 C10 C11 C12 - num
         
     )
     (:predicates
-        (adjacent ?x - grid ?y - grid)
+        (adjacent ?x - grid ?y - grid) ; the grid x is adjacent to the grid y
         (on ?x - object ?y - grid)  ; the object x is on the grid y
-        (clean ?x - grid)
-        (polluted ?x - grid)
-        (succ ?x - constant ?y - constant)
-        (budget ?x - constant)
-        (acting ?x - object)
-        (free ?x - grid)
+        (clean ?x - grid) ; the grid x is currently clean, animals can step on it
+        (polluted ?x - grid) ; the grid x is currently pollusted, animals can not step on it
+        (succ ?x - constant ?y - constant); y = x + 1
+        (next ?x - num ?y - num); y = x + 1
+        (budget ?x - constant) ; budget is used to keep track of the remaining cleaning times
+        (acting ?x - object); acting shows which agent is executing
+        (free ?x - grid) ; there is no items stand on the grid x
     )
-
+    ; Truck moves from one grid to another, two grids have to be adjacent to each other
+    ; Set the previous grid to be free, and remove the free fluent from the current grid.
     (:action TruckMove
         :parameters (
             ?x - grid
@@ -49,6 +57,8 @@
                 (free ?x) 
         )
     )
+    ; Truck arrives at a grid where the factory locates. Truck achieves its goal, 
+    ; Truck stop executing, other agents can start to execute.
     (:action arrive
         :parameters (
             ?x - grid
@@ -66,7 +76,8 @@
         )
 
     )
-    
+    ; Truck cleans up the current grid, two grids have to be adjacent to each other
+    ; The grid has to be clean.
     (:action clean
         :parameters (
             ?x - grid
@@ -77,7 +88,6 @@
             and 
                 (polluted ?x)
                 (on Truck ?x)
-                (budget ?y)
                 (succ ?z ?y)
                 (acting Truck)
         )
@@ -89,6 +99,7 @@
                 (budget ?z)
         )
     )
+    ; Animal moves from one grid to another, both grids must be ajacent to each other and clean,
     (:action AnimalMove
         :parameters (
             ?x - grid
