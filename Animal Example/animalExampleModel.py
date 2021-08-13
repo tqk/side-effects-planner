@@ -25,7 +25,7 @@ acting = lang.get('acting')
 free = lang.get('free') 
 
 #constants
-N0, N1, N2, N3 = [lang.get(f'n{k}') for k in range(0,4)]
+N0, N1, N2, N3 = [lang.get(f'c{k}') for k in range(0,4)]
 G11, G12, G13, G14 = [lang.get(f'g{k}') for k in range(11,15)]
 G21, G22, G23, G24 = [lang.get(f'g{k}') for k in range(21,25)]
 G31, G32, G33, G34 = [lang.get(f'g{k}') for k in range(31,35)]
