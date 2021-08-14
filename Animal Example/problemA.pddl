@@ -29,18 +29,11 @@
         (free G32) (free G33) (free G34)
         (succ N0 N1) (succ N1 N2) (succ N2 N3)
         (budget N3)
-        (next C1 C2) (next C2 C3)
-        (next C3 C4) (next C4 C5) (next C5 C6)
-        (next C6 C7) (next C7 C8) (next C8 C9)
-        (next C9 C10) (next C10 C11) (next C11 C12)
-        (count C1)
         (acting Truck)
     )
     (:goal 
         (and 
             (on Truck G34)
-            (on Racoon G13)
-            (on Beaver G11)
             (on Factory G34)
         )
     )
