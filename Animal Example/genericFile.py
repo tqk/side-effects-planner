@@ -22,10 +22,8 @@ agent = lang.sort('agent')
 achieved_pre = lang.sort('achieved_pre')
 # add done predicate
 donePre = lang.predicate('done',agent)
-#achieved_free = lang.predicate('achieved_free',grid)
-print(type(donePre))
 achieved = lang.predicate('achievedA',achieved_pre)
-
+#add the acting agent object
 actingAgent = lang.variable('actingAgent',agent)
 
 # add done action
@@ -51,7 +49,7 @@ for x in problem.init.as_atoms():
         #       :effect (and (achieved_holding_A) (increase total-cost 1))
         #   )
         #   ; Must add (achieved_holding_A) to the goal
-        ignore_A = problem.action('ignore_'+str(x),[],precondition = (donePre(actingAgent)),
+        ignore_A = problem.action('ignore_'+str(x),[actingAgent, const],precondition = (donePre(actingAgent)),
             effects = [
                 iofs.AddEffect(achieved(const))
             ])
@@ -60,7 +58,7 @@ for x in problem.init.as_atoms():
         #       :precondition (and (done) (not (holding A)))
         #       :effect (and (achieved_holding_A))
         #   )
-        achieved_B = problem.action('achieved_B_'+str(x),[],precondition = (donePre(actingAgent)) & ~x,
+        achieved_B = problem.action('achieved_B_'+str(x),[actingAgent, const],precondition = (donePre(actingAgent)) & ~x,
             effects = [
                 iofs.AddEffect(achieved(const))
             ])
