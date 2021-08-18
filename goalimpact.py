@@ -15,18 +15,12 @@ USAGE = "python3 goalimpact.py <in-domain.pddl> <in-problem.pddl> <out-domain.pd
 
 
 
-# add done predicate
-# donePre = lang.predicate('done')
-# achieved = lang.predicate('achieved')
-# # add done action
-# doneAct = problem.action('done', [], precondition = problem.goal,
-# effects = [
-#     iofs.AddEffect(donePre)
-# ])
-
 
 def normalize_fluent(fluent):
     return str(fluent).replace('  ',' ').replace(' ', '_').replace('(', '_').replace(')', '').replace(',', '_')
+
+def normalize_action(act):
+    return str(act).replace(' ', '').replace('(', '__').replace(')', '').replace(',', '_')
 
 def write_pddl(problem, dname, pname):
     writer = iofs.FstripsWriter(problem)
@@ -45,7 +39,8 @@ def ground_problem(problem):
     grounded_fluents = set([grounded_fluent.to_atom() for grounded_fluent in grounder.ground_state_variables().objects])
     init = [f for f in problem.init.as_atoms() if f in grounded_fluents]
     goal = [f for f in problem.goal.subformulas if f in grounded_fluents]
-    return (grounded_fluents, init, goal, instance.operators)
+
+    return (grounded_fluents, init, goal, operators)
 
 def atomicize(fluents, init, goal, operators, dname = "atomic", pname = "atomicP"):
     lang = iofs.language(dname)
@@ -67,9 +62,37 @@ def atomicize(fluents, init, goal, operators, dname = "atomic", pname = "atomicP
     # Goal
     problem.goal = land(*[fmap[f]() for f in goal])
 
-    # TODO: Operators
+    # Operators
+    for op in operators:
+        pre = [fmap[f]() for f in op.precondition.subformulas if f in fluents]
+        effs = []
+        for eff in op.effects:
+            if isinstance(eff, iofs.AddEffect):
+                effs.append(iofs.AddEffect(fmap[eff.atom]()))
+            elif isinstance(eff, iofs.DelEffect):
+                effs.append(iofs.DelEffect(fmap[eff.atom]()))
+            else:
+                raise ValueError("Unknown effect type: {}".format(eff))
+
+        problem.action(normalize_action(op.name), [], precondition=land(*pre), effects=effs)
 
     return problem
+
+
+def modify_domain(atomic_domain):
+
+    # Add done predicate
+    donePre = atomic_domain.language.predicate('done')
+    # # add done action
+    atomic_domain.action('done', [],
+                         precondition = atomic_domain.goal,
+                         effects = [
+                             iofs.AddEffect(donePre())
+                         ])
+
+    # TODO: The rest of the encoding...
+
+    return atomic_domain
 
 """
 for x in grounded_fluents:
@@ -137,4 +160,8 @@ if __name__ == '__main__':
 
     atomic_domain = atomicize(grounded_fluents, init, goal, operators)
 
-    write_pddl(atomic_domain, out_domain_file, out_problem_file)
+    modified_domain = modify_domain(atomic_domain)
+
+    write_pddl(modified_domain, out_domain_file, out_problem_file)
+
+    print('Huzzah!')
