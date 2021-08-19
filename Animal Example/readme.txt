@@ -3,5 +3,5 @@ genericFile.py takes two argument,
   # second argument: path to the problem file
 It generates domain.pddl and problem.pddl
 
-Current problem:
-  1. the fluents can only be read as atoms from init and goal, type predicate is required in the actions.
+Newest changes:
+  actions takes no parameters, all fluents in preconditions are converted to atoms.
