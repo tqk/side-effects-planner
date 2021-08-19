@@ -15,9 +15,8 @@ USAGE = "python3 goalimpact.py <in-domain.pddl> <in-problem.pddl> <out-domain.pd
 
 
 
-
 def normalize_fluent(fluent):
-    return str(fluent).replace('  ',' ').replace(' ', '_').replace('(', '_').replace(')', '').replace(',', '_')
+    return str(fluent).replace('()', '').replace(')', '').replace('  ',' ').strip().replace(' ', '_').replace('(', '_').replace(',', '_')
 
 def normalize_action(act):
     return str(act).replace(' ', '').replace('(', '__').replace(')', '').replace(',', '_')
