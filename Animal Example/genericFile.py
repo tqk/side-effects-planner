@@ -1,4 +1,5 @@
 import sys
+
 import tarski
 from tarski.io import PDDLReader
 from tarski.io import fstrips as iofs
@@ -21,17 +22,21 @@ lang = problem.language
 agent = lang.sort('agent')
 achieved_pre = lang.sort('achieved_pre')
 # add done predicate
-donePre = lang.predicate('done',agent)
+donePre = lang.predicate('done')
 achieved = lang.predicate('achievedA',achieved_pre)
 #add the acting agent object
 actingAgent = lang.variable('actingAgent',agent)
 
 # add done action
-doneAct = problem.action('done', [actingAgent], precondition = problem.goal,
+doneAct = problem.action('done', [], precondition = problem.goal,
 effects = [
-    iofs.AddEffect(donePre(actingAgent))
+    iofs.AddEffect(donePre())
 ]) 
 
+
+
+
+print(type(problem.init))
 for x in problem.init.as_atoms():
     if x not in (problem.goal.__dict__)['subformulas']:
         #   ; If (holding A) is not in the goal, but in the initial state
@@ -40,29 +45,32 @@ for x in problem.init.as_atoms():
         #       :effect (and (achieved_holding_A))
         #   )
         const = lang.variable(str(x),achieved_pre) 
-        achieved_A = problem.action('achieved_A_'+str(x),[actingAgent, const],precondition = (donePre(actingAgent)) & x,
+        achieved_A = problem.action('achieved_A_'+str(x),[],precondition = (donePre()) & x,
             effects = [
-                iofs.AddEffect(achieved(const))
+                iofs.AddEffect(achieved)
             ])
         #   (:action ignore_holding_A
         #       :precondition (and (done))
         #       :effect (and (achieved_holding_A) (increase total-cost 1))
         #   )
         #   ; Must add (achieved_holding_A) to the goal
-        ignore_A = problem.action('ignore_'+str(x),[actingAgent, const],precondition = (donePre(actingAgent)),
+        ignore_A = problem.action('ignore_'+str(x),[],precondition = (donePre()),
             effects = [
-                iofs.AddEffect(achieved(const))
+                iofs.AddEffect(achieved)
             ])
         #   ; If (holding A) is not in the goal, and not in the initial state
         #   (:action achieve_holding_A
         #       :precondition (and (done) (not (holding A)))
         #       :effect (and (achieved_holding_A))
         #   )
-        achieved_B = problem.action('achieved_B_'+str(x),[actingAgent, const],precondition = (donePre(actingAgent)) & ~x,
+        achieved_B = problem.action('achieved_B_'+str(x),[],precondition = (donePre()) & ~x,
             effects = [
-                iofs.AddEffect(achieved(const))
+                iofs.AddEffect(achieved)
             ])
+
+print(problem.actions)
+
 #export
 #writer = iofs.FstripsWriter(problem)
 #writer.write("domain.pddl", "problem.pddl")
-print(list(problem.actions))
+
