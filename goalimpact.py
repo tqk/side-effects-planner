@@ -42,7 +42,9 @@ def ground_problem(problem):
     return (grounded_fluents, init, goal, operators)
 
 def atomicize(fluents, init, goal, operators, dname = "atomic", pname = "atomicP"):
-    lang = iofs.language(dname)
+    
+    lang = iofs.language(dname, theories=['arithmetic'])
+    cost = lang.function('total-cost', lang.Integer)
 
     # Fluents
     fmap = {}
@@ -59,7 +61,7 @@ def atomicize(fluents, init, goal, operators, dname = "atomic", pname = "atomicP
     problem.init = new_init
 
     # Goal
-    problem.goal = land(*[fmap[f]() for f in goal])
+    problem.goal = land(*[fmap[f]() for f in goal], flat=True)
 
     # Operators
     for op in operators:
@@ -73,7 +75,7 @@ def atomicize(fluents, init, goal, operators, dname = "atomic", pname = "atomicP
             else:
                 raise ValueError("Unknown effect type: {}".format(eff))
 
-        problem.action(normalize_action(op.name), [], precondition=land(*pre), effects=effs)
+        problem.action(normalize_action(op.name), [], precondition=land(*pre, flat=True), effects=effs)
 
     return problem
 
@@ -82,6 +84,7 @@ def modify_domain(atomic_domain):
 
     # Add done predicate
     donePre = atomic_domain.language.predicate('done')
+
     # # add done action
     atomic_domain.action('done', [],
                          precondition = atomic_domain.goal,
@@ -89,60 +92,44 @@ def modify_domain(atomic_domain):
                              iofs.AddEffect(donePre())
                          ])
 
-    # TODO: The rest of the encoding...
+    # Don't allow regular actions after done
+    for action in atomic_domain.actions.values():
+        if action.name != 'done':
+            action.precondition = land(action.precondition, ~donePre())
+
+    achieved_fluents = []
+
+    for f in [f() for f in atomic_domain.language.predicates if f.arity == 0]:
+        if f != donePre() and f not in atomic_domain.goal.subformulas:
+
+            achieved = atomic_domain.language.predicate('achieved_'+normalize_fluent(f)) 
+            achieved_fluents.append(achieved)
+
+            atomic_domain.action('ignore_'+normalize_fluent(f), [],
+                                 precondition = donePre(),
+                                 effects = [
+                                     iofs.AddEffect(achieved()),
+                                 ],
+                                 cost = iofs.AdditiveActionCost(atomic_domain.language.constant(1, atomic_domain.language.get_sort('Integer'))))
+
+            if f in atomic_domain.init.as_atoms():
+                atomic_domain.action('achieve_'+normalize_fluent(f), [],
+                                     precondition = f & donePre(),
+                                     effects = [
+                                         iofs.AddEffect(achieved()),
+                                     ])
+            else:
+                atomic_domain.action('achieve_'+normalize_fluent(f), [],
+                                     precondition = ~f & donePre(),
+                                     effects = [
+                                         iofs.AddEffect(achieved()),
+                                     ])
+
+    atomic_domain.goal = land(*[f() for f in achieved_fluents], flat=True)
 
     return atomic_domain
 
-"""
-for x in grounded_fluents:
-    if x not in problem.goal.subformulas:
-        #   ; If (holding A) is not in the goal, but in the initial state
-        #   (:action achieve_holding_A
-        #       :precondition (and (done) (holding A))
-        #       :effect (and (achieved_holding_A))
-        #   )
-        if x in init:
-            print(normalize_fluent(x))
-            achievedAct = problem.action('achieved_'+str(x),
-                            [],
 
-
-
-
-                            precondition = donePre & x,
-
-                            # TODO: Predicate and atom can't be combined. Need to do everything on the lifted level.
-                            #        This means that the cost of ignoring a goal atom should be 0 and not 1.
-                            #        This also means that all objects should move to constants, so that we can have
-                            #          the "done" action actually work.
-
-
-
-
-                            effects = [iofs.AddEffect((achieved))])
-        #   (:action ignore_holding_A
-        #       :precondition (and (done))
-        #       :effect (and (achieved_holding_A) (increase total-cost 1))
-        #   )
-        #   ; Must add (achieved_holding_A) to the goal
-        # ignore_A = problem.action('ignore_A',[],precondition = donePre,
-        #     effects = [
-        #         iofs.AddEffect(achieved)
-        #     ])
-        #   ; If (holding A) is not in the goal, and not in the initial state
-        #   (:action achieve_holding_A
-        #       :precondition (and (done) (not (holding A)))
-        #       :effect (and (achieved_holding_A))
-        #   )
-        # achieved_B = problem.action('achieved_B',[],precondition = donePre &~x,
-        #     effects = [
-        #         iofs.AddEffect(achieved)
-        #     ])
-#export
-#writer = iofs.FstripsWriter(problem)
-#writer.write("domain.pddl", "problem.pddl")
-# print(list(problem.actions))
-"""
 
 if __name__ == '__main__':
     if len(sys.argv) != 5:
