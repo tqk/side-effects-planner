@@ -23,7 +23,7 @@ agent = lang.sort('agent')
 achieved_pre = lang.sort('achieved_pre')
 # add done predicate
 donePre = lang.predicate('done')
-achieved = lang.predicate('achievedA',achieved_pre)
+achieved = lang.predicate('achievedA')
 #add the acting agent object
 actingAgent = lang.variable('actingAgent',agent)
 
@@ -47,7 +47,7 @@ for x in problem.init.as_atoms():
         const = lang.variable(str(x),achieved_pre) 
         achieved_A = problem.action('achieved_A_'+str(x),[],precondition = (donePre()) & x,
             effects = [
-                iofs.AddEffect(achieved)
+                iofs.AddEffect(achieved())
             ])
         #   (:action ignore_holding_A
         #       :precondition (and (done))
@@ -56,7 +56,7 @@ for x in problem.init.as_atoms():
         #   ; Must add (achieved_holding_A) to the goal
         ignore_A = problem.action('ignore_'+str(x),[],precondition = (donePre()),
             effects = [
-                iofs.AddEffect(achieved)
+                iofs.AddEffect(achieved())
             ])
         #   ; If (holding A) is not in the goal, and not in the initial state
         #   (:action achieve_holding_A
@@ -65,12 +65,12 @@ for x in problem.init.as_atoms():
         #   )
         achieved_B = problem.action('achieved_B_'+str(x),[],precondition = (donePre()) & ~x,
             effects = [
-                iofs.AddEffect(achieved)
+                iofs.AddEffect(achieved())
             ])
 
 print(problem.actions)
 
 #export
-#writer = iofs.FstripsWriter(problem)
-#writer.write("domain.pddl", "problem.pddl")
+writer = iofs.FstripsWriter(problem)
+writer.write("domain.pddl", "problem.pddl")
 
