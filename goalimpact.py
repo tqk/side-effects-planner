@@ -25,6 +25,22 @@ def write_pddl(problem, dname, pname):
     writer = iofs.FstripsWriter(problem)
     writer.write(dname, pname)
 
+    # Fix the function name
+    with open(dname, 'r') as f:
+        domtext = f.read()
+    domtext = domtext.replace('- int', '- number')
+    with open(dname, 'w') as f:
+        f.write(domtext)
+
+    # Add the metric to minimize cost
+    with open(pname, 'r') as f:
+        probtext = f.read()
+    assert probtext[-3:] == ')\n\n', probtext[-3:]
+    probtext = probtext[:-3] + '\n(:metric minimize (total-cost))\n\n)\n'
+    with open(pname, 'w') as f:
+        f.write(probtext)
+
+
 def parse_pddl(dname, pname):
     reader = PDDLReader(raise_on_error=True)
     reader.parse_domain(dname)
@@ -42,7 +58,7 @@ def ground_problem(problem):
     return (grounded_fluents, init, goal, operators)
 
 def atomicize(fluents, init, goal, operators, dname = "atomic", pname = "atomicP"):
-    
+
     lang = iofs.language(dname, theories=['arithmetic'])
     cost = lang.function('total-cost', lang.Integer)
 
@@ -102,7 +118,7 @@ def modify_domain(atomic_domain):
     for f in [f() for f in atomic_domain.language.predicates if f.arity == 0]:
         if f != donePre() and f not in atomic_domain.goal.subformulas:
 
-            achieved = atomic_domain.language.predicate('achieved_'+normalize_fluent(f)) 
+            achieved = atomic_domain.language.predicate('achieved_'+normalize_fluent(f))
             achieved_fluents.append(achieved)
 
             atomic_domain.action('ignore_'+normalize_fluent(f), [],
