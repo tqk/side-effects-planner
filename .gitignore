@@ -4,3 +4,6 @@
 d.pddl
 
 p.pddl
+
+sas_plan.*
+output.sas
