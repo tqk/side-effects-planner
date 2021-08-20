@@ -13,7 +13,9 @@ RUN apt-get install -y \
         build-essential \
         vim \
         git \
-        clingo
+        gringo
+
+RUN pip3 install tarski
 
 # Set up the planning required
 RUN planutils install -f downward
