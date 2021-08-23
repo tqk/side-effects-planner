@@ -96,7 +96,7 @@ def atomicize(fluents, init, goal, operators, dname = "atomic", pname = "atomicP
     return problem
 
 
-def modify_domain(atomic_domain):
+def modify_domain(atomic_domain, stratified=False):
 
     # Add done predicate
     donePre = atomic_domain.language.predicate('done')
@@ -121,22 +121,38 @@ def modify_domain(atomic_domain):
             achieved = atomic_domain.language.predicate('achieved_'+normalize_fluent(f))
             achieved_fluents.append(achieved)
 
-            atomic_domain.action('ignore_'+normalize_fluent(f), [],
-                                 precondition = donePre(),
-                                 effects = [
-                                     iofs.AddEffect(achieved()),
-                                 ],
-                                 cost = iofs.AdditiveActionCost(atomic_domain.language.constant(1, atomic_domain.language.get_sort('Integer'))))
+            # If stratified, then the achievements must happen in order.
+            if stratified and len(achieved_fluents) > 1:
+                pospre = land(f, donePre(), achieved_fluents[-2](), flat=True)
+                negpre = land(~f, donePre(), achieved_fluents[-2](), flat=True)
+            else:
+                pospre = f & donePre()
+                negpre = ~f & donePre()
 
             if f in atomic_domain.init.as_atoms():
+
+                atomic_domain.action('ignore_'+normalize_fluent(f), [],
+                                     precondition = negpre,
+                                     effects = [
+                                         iofs.AddEffect(achieved()),
+                                     ],
+                                     cost = iofs.AdditiveActionCost(atomic_domain.language.constant(1, atomic_domain.language.get_sort('Integer'))))
+
                 atomic_domain.action('achieve_'+normalize_fluent(f), [],
-                                     precondition = f & donePre(),
+                                     precondition = pospre,
                                      effects = [
                                          iofs.AddEffect(achieved()),
                                      ])
             else:
+                atomic_domain.action('ignore_'+normalize_fluent(f), [],
+                                     precondition = pospre,
+                                     effects = [
+                                         iofs.AddEffect(achieved()),
+                                     ],
+                                     cost = iofs.AdditiveActionCost(atomic_domain.language.constant(1, atomic_domain.language.get_sort('Integer'))))
+
                 atomic_domain.action('achieve_'+normalize_fluent(f), [],
-                                     precondition = ~f & donePre(),
+                                     precondition = negpre,
                                      effects = [
                                          iofs.AddEffect(achieved()),
                                      ])
@@ -162,7 +178,7 @@ if __name__ == '__main__':
 
     atomic_domain = atomicize(grounded_fluents, init, goal, operators)
 
-    modified_domain = modify_domain(atomic_domain)
+    modified_domain = modify_domain(atomic_domain, stratified=True)
 
     write_pddl(modified_domain, out_domain_file, out_problem_file)
 
