@@ -1,6 +1,8 @@
 
 .vscode/
 
+*.pyc
+
 d.pddl
 
 p.pddl
