@@ -10,12 +10,41 @@ from tarski.grounding.lp_grounding import (
     LPGroundingStrategy,
 )
 
+def cost1(domain):
+    return iofs.AdditiveActionCost(domain.language.constant(1, domain.language.get_sort('Integer')))
 
 def normalize_fluent(fluent):
     return str(fluent).replace('()', '').replace(')', '').replace('  ',' ').strip().replace(' ', '_').replace('(', '_').replace(',', '_')
 
 def normalize_action(act):
     return str(act).replace(' ', '').replace('(', '__').replace(')', '').replace(',', '_')
+
+def str_to_atom(fluent, domain):
+    return domain.language.get(fluent)()
+
+def str_to_action(act, domain):
+    return domain.get_action(act)
+
+def regress(state, act):
+    adds = {f for f in act.effects if isinstance(f, iofs.AddEffect)}
+    dels = {f for f in act.effects if isinstance(f, iofs.DelEffect)}
+
+
+
+    # TODO: figure out how to get at the negative preconditions
+    pospres = {f for f in act.precondition.subformulas}
+    negpres = {f for f in act.precondition.subformulas}
+
+
+    
+    pos = state[0]
+    neg = state[1]
+
+    assert adds & dels == set() and pos & dels == set(), f"Cannot regress with conflicting goal / action effects: {state} {act}"
+    
+    return ((pos - adds) | pospres), ((neg - dels) | negpres)
+
+
 
 def write_pddl(problem, dname, pname):
     writer = iofs.FstripsWriter(problem)

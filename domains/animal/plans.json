@@ -1,0 +1,11 @@
+{
+    "Beaver": {
+        "goal": ["on_beaver_g33"],
+        "plan": [
+            "AnimalMove__g21_g22_beaver",
+            "AnimalMove__g22_g32_beaver",
+            "AnimalMove__g32_g33_beaver",
+            "TruckMove__g12_g11"
+        ]
+    }
+}
