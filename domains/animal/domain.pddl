@@ -106,7 +106,7 @@
                 (adjacent ?x ?y)
                 (on ?z ?x)
                 (clean ?y)
-                (acting Beaver)
+                (acting ?z)
         )
         :effect (
             and
