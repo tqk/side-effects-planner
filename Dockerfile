@@ -15,12 +15,12 @@ RUN apt-get install -y \
         git \
         gringo
 
-RUN pip3 install tarski
-
 # Set up the planning required
 RUN planutils install -f downward
 RUN planutils install -f lama-first
 RUN planutils install -f lama
+RUN planutils install -f tarski
+RUN planutils install -f planning.domains
 
 
 # default command to execute when container starts
