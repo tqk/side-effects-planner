@@ -12,12 +12,16 @@ def modify_domain(atomic_domain, in_plans, stratified=False):
 
     # Read the plans json from in_plans
     with open(in_plans, 'r') as f:
-        plans = json.load(f)
+        plandata = json.load(f)
     
     # Compute the goal from the text description
+    plans = {}
     goals = {}
-    for agent in plans:
-        goals[agent] = (set([tw.str_to_atom(f, atomic_domain) for f in plans[agent]['goal']]), set())
+    for agent in plandata:
+        for i, plangoal in enumerate(plandata[agent]):
+            agname = agent + str(i)
+            goals[agname] = set([tw.str_to_atom(f, atomic_domain) for f in plangoal['goal']])
+            plans[agname] = plangoal['plan']
     
     subgoals = {agent: [goals[agent]] for agent in plans}
     for agent in plans:
@@ -57,7 +61,7 @@ def modify_domain(atomic_domain, in_plans, stratified=False):
 
         for i, state in enumerate(subgoals[agent]):
 
-            statef = list(state[0]) + [~f for f in state[1]]
+            statef = list(state)
         
             # If stratified, then the achievements must happen in order.
             if stratified and len(achieved_fluents) > 1:
