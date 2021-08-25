@@ -1,11 +1,36 @@
 {
-    "Beaver": {
-        "goal": ["on_beaver_g33"],
-        "plan": [
-            "AnimalMove__g21_g22_beaver",
-            "AnimalMove__g22_g32_beaver",
-            "AnimalMove__g32_g33_beaver",
-            "TruckMove__g12_g11"
-        ]
-    }
+    "Beaver": [
+        {
+            "goal": [
+                "on_beaver_g33"
+            ],
+            "plan": [
+                "AnimalMove__g21_g22_beaver",
+                "AnimalMove__g22_g32_beaver",
+                "AnimalMove__g32_g33_beaver"
+            ]
+        },
+        {
+            "goal": [
+                "on_beaver_g11"
+            ],
+            "plan": [
+                "AnimalMove__g21_g22_beaver",
+                "AnimalMove__g22_g12_beaver",
+                "AnimalMove__g12_g11_beaver"
+            ]
+        }
+    ],
+    "Racoon": [
+        {
+            "goal": [
+                "on_racoon_g13"
+            ],
+            "plan": [
+                "AnimalMove__g23_g22_racoon",
+                "AnimalMove__g22_g12_racoon",
+                "AnimalMove__g12_g13_racoon"
+            ]
+        }
+    ]
 }
