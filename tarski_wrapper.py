@@ -28,21 +28,11 @@ def str_to_action(act, domain):
 def regress(state, act):
     adds = {f for f in act.effects if isinstance(f, iofs.AddEffect)}
     dels = {f for f in act.effects if isinstance(f, iofs.DelEffect)}
+    pre = {f for f in act.precondition.subformulas}
 
+    assert adds & dels == set() and state & dels == set(), f"Cannot regress with conflicting goal / action effects: {state} {act}"
 
-
-    # TODO: figure out how to get at the negative preconditions
-    pospres = {f for f in act.precondition.subformulas}
-    negpres = {f for f in act.precondition.subformulas}
-
-
-    
-    pos = state[0]
-    neg = state[1]
-
-    assert adds & dels == set() and pos & dels == set(), f"Cannot regress with conflicting goal / action effects: {state} {act}"
-    
-    return ((pos - adds) | pospres), ((neg - dels) | negpres)
+    return ((state - adds) | pre)
 
 
 
