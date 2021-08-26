@@ -10,6 +10,9 @@ from tarski.grounding.lp_grounding import (
     LPGroundingStrategy,
 )
 
+from tarski.grounding import NaiveGroundingStrategy
+from tarski.syntax.transform.action_grounding import ground_schema_into_plain_operator_from_grounding
+
 def cost1(domain):
     return iofs.AdditiveActionCost(domain.language.constant(1, domain.language.get_sort('Integer')))
 
@@ -63,6 +66,28 @@ def parse_pddl(dname, pname):
     return problem
 
 def ground_problem(problem):
+    operators = ground_problem_schemas_into_plain_operators(problem)
+    grounder = NaiveGroundingStrategy(problem)
+
+    grounded_fluents = set([grounded_fluent.to_atom() for grounded_fluent in grounder.ground_state_variables().objects])
+
+    init = [f for f in problem.init.as_atoms() if f in grounded_fluents]
+
+    if isinstance(problem.goal, tarski.syntax.Atom):
+        goal = [problem.goal]
+    else:
+        goal = [f for f in problem.goal.subformulas if f in grounded_fluents]
+
+    operators = []
+    actions = grounder.ground_actions()
+    for name, bindings in actions.items():
+        for binding in bindings:
+            action = problem.get_action(name)
+            operators.append(ground_schema_into_plain_operator_from_grounding(action, binding))
+
+    return (grounded_fluents, init, goal, operators)
+
+def smart_ground_problem(problem):
     operators = ground_problem_schemas_into_plain_operators(problem)
     instance = GroundForwardSearchModel(problem, operators)
     grounder = LPGroundingStrategy(problem, include_variable_inequalities=True)
