@@ -13,7 +13,7 @@ def modify_domain(atomic_domain, in_plans, stratified=False):
     # Read the plans json from in_plans
     with open(in_plans, 'r') as f:
         plandata = json.load(f)
-    
+
     # Compute the goal from the text description
     plans = {}
     goals = {}
@@ -22,11 +22,11 @@ def modify_domain(atomic_domain, in_plans, stratified=False):
             agname = agent + str(i)
             goals[agname] = set([tw.str_to_atom(f, atomic_domain) for f in plangoal['goal']])
             plans[agname] = plangoal['plan']
-    
+
     subgoals = {agent: [goals[agent]] for agent in plans}
     for agent in plans:
         state = goals[agent]
-        for act in reversed(plans[agent]['plan']):
+        for act in reversed(plans[agent]):
             state = tw.regress(state, tw.str_to_action(act, atomic_domain))
             subgoals[agent].append(state)
 
@@ -52,8 +52,14 @@ def modify_domain(atomic_domain, in_plans, stratified=False):
         achieved = atomic_domain.language.predicate(f'achieved_{agent}')
         achieved_fluents.append(achieved)
 
+        # If stratified, then the achievements must happen in order.
+        if stratified and len(achieved_fluents) > 1:
+            pre = tw.land(~achieved(), achieved_fluents[-2](), donePre(), flat=True)
+        else:
+            pre = tw.land(~achieved(), donePre(), flat=True)
+
         atomic_domain.action(f'ignore_{agent}', [],
-                             precondition = ~achieved() & donePre(),
+                             precondition = pre,
                              effects = [
                                  tw.iofs.AddEffect(achieved()),
                              ],
@@ -62,7 +68,7 @@ def modify_domain(atomic_domain, in_plans, stratified=False):
         for i, state in enumerate(subgoals[agent]):
 
             statef = list(state)
-        
+
             # If stratified, then the achievements must happen in order.
             if stratified and len(achieved_fluents) > 1:
                 pre = tw.land(*statef, ~achieved(), donePre(), achieved_fluents[-2](), flat=True)
@@ -85,7 +91,7 @@ if __name__ == '__main__':
     if len(sys.argv) != 6:
         print(USAGE)
         exit(1)
-    
+
     print('\n\tCompiling problem...', end='')
 
     domain_file = sys.argv[1]
