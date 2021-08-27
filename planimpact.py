@@ -3,12 +3,12 @@ import json, sys
 
 import tarski_wrapper as tw
 
-USAGE = "\n\tpython3 planimpact.py <in-domain.pddl> <in-problem.pddl> <in-plans.py> <out-domain.pddl> <out-problem.pddl>\n"
+USAGE = "\n\tpython3 planimpact.py [--assess plan.ipc] <in-domain.pddl> <in-problem.pddl> <in-plans.py> <out-domain.pddl> <out-problem.pddl>\n"
 
 
 
 
-def modify_domain(atomic_domain, in_plans, stratified=False):
+def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
 
     # Read the plans json from in_plans
     with open(in_plans, 'r') as f:
@@ -27,7 +27,7 @@ def modify_domain(atomic_domain, in_plans, stratified=False):
     for agent in plans:
         state = goals[agent]
         for act in reversed(plans[agent]):
-            state = tw.regress(state, tw.str_to_action(act, atomic_domain))
+            state = tw.regress(state, tw.str_to_action(tw.normalize_action(act), atomic_domain))
             subgoals[agent].append(state)
 
 
@@ -45,7 +45,11 @@ def modify_domain(atomic_domain, in_plans, stratified=False):
     # Don't allow regular actions after done
     for action in atomic_domain.actions.values():
         if action.name != 'done':
-            action.precondition = tw.land(action.precondition, ~donePre(), flat=True)
+            action.precondition = tw.land(*(action.precondition.subformulas), ~donePre(), flat=True)
+
+    # Add the forced plan as a prefix.
+    if assess:
+        tw.force_plan(atomic_domain, assess, avoid = ['done'])
 
     achieved_fluents = []
     for agent in subgoals:
@@ -82,31 +86,42 @@ def modify_domain(atomic_domain, in_plans, stratified=False):
                                      tw.iofs.AddEffect(achieved()),
                                  ])
 
-    atomic_domain.goal = tw.land(*[f() for f in achieved_fluents], flat=True)
+    if stratified:
+        atomic_domain.goal = achieved_fluents[-1]()
+    else:
+        atomic_domain.goal = tw.land(*[f() for f in achieved_fluents], flat=True)
 
     return atomic_domain
 
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 6:
+    if len(sys.argv) > 2 and sys.argv[1] == '--assess':
+        with open(sys.argv[2], 'r') as f:
+            plan = [l.strip() for l in f.readlines() if ';' not in l]
+        argv = sys.argv[3:]
+    else:
+        plan = None
+        argv = sys.argv[1:]
+
+    if len(argv) != 5:
         print(USAGE)
         exit(1)
 
     print('\n\tCompiling problem...', end='')
 
-    domain_file = sys.argv[1]
-    problem_file = sys.argv[2]
-    in_plans = sys.argv[3]
-    out_domain_file = sys.argv[4]
-    out_problem_file = sys.argv[5]
+    domain_file = argv[0]
+    problem_file = argv[1]
+    in_plans = argv[2]
+    out_domain_file = argv[3]
+    out_problem_file = argv[4]
 
     domain = tw.parse_pddl(domain_file, problem_file)
     (grounded_fluents, init, goal, operators) = tw.ground_problem(domain)
 
     atomic_domain = tw.atomicize(grounded_fluents, init, goal, operators)
 
-    modified_domain = modify_domain(atomic_domain, in_plans, stratified=True)
+    modified_domain = modify_domain(atomic_domain, in_plans, stratified=True, assess=plan)
 
     tw.write_pddl(modified_domain, out_domain_file, out_problem_file)
 
