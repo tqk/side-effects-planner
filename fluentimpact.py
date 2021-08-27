@@ -3,7 +3,7 @@ import sys
 
 import tarski_wrapper as tw
 
-USAGE = "python3 goalimpact.py <in-domain.pddl> <in-problem.pddl> <out-domain.pddl> <out-problem.pddl>"
+USAGE = "\n\tpython3 goalimpact.py [--assess plan.ipc] <in-domain.pddl> <in-problem.pddl> <out-domain.pddl> <out-problem.pddl>\n"
 
 
 
@@ -81,15 +81,24 @@ def modify_domain(atomic_domain, stratified=False):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 5:
+    if len(sys.argv) > 2 and sys.argv[1] == '--assess':
+        with open(sys.argv[2], 'r') as f:
+            plan = [l.strip() for l in f.readlines() if ';' not in l]
+            print(plan)
+        argv = sys.argv[3:]
+    else:
+        plan = None
+        argv = sys.argv[1:]
+
+    if len(argv) != 4:
         print(USAGE)
         exit(1)
 
     print("\n\tCompiling...", end='')
-    domain_file = sys.argv[1]
-    problem_file = sys.argv[2]
-    out_domain_file = sys.argv[3]
-    out_problem_file = sys.argv[4]
+    domain_file = argv[0]
+    problem_file = argv[1]
+    out_domain_file = argv[2]
+    out_problem_file = argv[3]
 
     domain = tw.parse_pddl(domain_file, problem_file)
     (grounded_fluents, init, goal, operators) = tw.ground_problem(domain)

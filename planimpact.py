@@ -3,7 +3,7 @@ import json, sys
 
 import tarski_wrapper as tw
 
-USAGE = "python3 planimpact.py <in-domain.pddl> <in-problem.pddl> <in-plans.py> <out-domain.pddl> <out-problem.pddl>"
+USAGE = "\n\tpython3 planimpact.py <in-domain.pddl> <in-problem.pddl> <in-plans.py> <out-domain.pddl> <out-problem.pddl>\n"
 
 
 
