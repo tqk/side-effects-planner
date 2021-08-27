@@ -45,7 +45,6 @@
 	(connected loadarea depot0-2-1)  
 	(clear depot0-1-1);
 	(clear depot0-2-2); 
-	;(clear depot0-2-1);
 	(clear container-0-0)
 	;;
 	(at hoist0 loadarea)
@@ -55,5 +54,10 @@
 
 (:goal (and
 	(on crate0 depot0-1-2);
-	(at hoist1 depot0-2-1)))
+	(at hoist1 depot0-2-1))
+)
+
+;(:goal (and
+;	(in crate0 depot0))
+;)
 )

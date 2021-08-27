@@ -374,7 +374,6 @@
     (clear pos-11-03)
     (clear pos-11-04)
     (clear pos-11-08)
-    (= (total-cost) 0)
   )
   (:goal (and
     (at player-01 pos-03-06)
@@ -384,5 +383,4 @@
     (at stone-04 pos-05-04)
     (at-goal stone-05)
   ))
-  (:metric minimize (total-cost))
 )
