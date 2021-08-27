@@ -3,12 +3,12 @@ import sys
 
 import tarski_wrapper as tw
 
-USAGE = "\n\tpython3 goalimpact.py [--assess plan.ipc] <in-domain.pddl> <in-problem.pddl> <out-domain.pddl> <out-problem.pddl>\n"
+USAGE = "\n\tpython3 fluentimpact.py [--assess plan.ipc] <in-domain.pddl> <in-problem.pddl> <out-domain.pddl> <out-problem.pddl>\n"
 
 
 
 
-def modify_domain(atomic_domain, stratified=False):
+def modify_domain(atomic_domain, stratified=False, assess=None):
 
     # Add done predicate
     donePre = atomic_domain.language.predicate('done')
@@ -23,7 +23,11 @@ def modify_domain(atomic_domain, stratified=False):
     # Don't allow regular actions after done
     for action in atomic_domain.actions.values():
         if action.name != 'done':
-            action.precondition = tw.land(action.precondition, ~donePre(), flat=True)
+            action.precondition = tw.land(*(action.precondition.subformulas), ~donePre(), flat=True)
+
+    # Add the forced plan as a prefix.
+    if assess:
+        tw.force_plan(atomic_domain, assess, avoid = ['done'])
 
     achieved_fluents = []
 
@@ -33,7 +37,7 @@ def modify_domain(atomic_domain, stratified=False):
         goal = atomic_domain.goal.subformulas
 
     for f in [f() for f in atomic_domain.language.predicates if f.arity == 0]:
-        if f != donePre() and f not in goal:
+        if f != donePre() and f not in goal and 'forced' not in str(f) and 'disabled' not in str(f):
 
             achieved = atomic_domain.language.predicate('achieved_'+tw.normalize_fluent(f))
             achieved_fluents.append(achieved)
@@ -74,7 +78,10 @@ def modify_domain(atomic_domain, stratified=False):
                                          tw.iofs.AddEffect(achieved()),
                                      ])
 
-    atomic_domain.goal = tw.land(*[f() for f in achieved_fluents], flat=True)
+    if stratified:
+        atomic_domain.goal = achieved_fluents[-1]()
+    else:
+        atomic_domain.goal = tw.land(*[f() for f in achieved_fluents], flat=True)
 
     return atomic_domain
 
@@ -84,7 +91,6 @@ if __name__ == '__main__':
     if len(sys.argv) > 2 and sys.argv[1] == '--assess':
         with open(sys.argv[2], 'r') as f:
             plan = [l.strip() for l in f.readlines() if ';' not in l]
-            print(plan)
         argv = sys.argv[3:]
     else:
         plan = None
@@ -105,7 +111,7 @@ if __name__ == '__main__':
 
     atomic_domain = tw.atomicize(grounded_fluents, init, goal, operators)
 
-    modified_domain = modify_domain(atomic_domain, stratified=True)
+    modified_domain = modify_domain(atomic_domain, stratified=True, assess=plan)
 
     tw.write_pddl(modified_domain, out_domain_file, out_problem_file)
 

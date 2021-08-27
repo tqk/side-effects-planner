@@ -20,10 +20,10 @@ def cost1(domain):
     return iofs.AdditiveActionCost(domain.language.constant(1, domain.language.get_sort('Integer')))
 
 def normalize_fluent(fluent):
-    return str(fluent).replace('()', '').replace(')', '').replace('  ',' ').strip().replace(' ', '_').replace('(', '_').replace(',', '_')
+    return str(fluent).lower().replace('()', '').replace(')', '').replace('  ',' ').strip().replace(' ', '_').replace('(', '_').replace(',', '_')
 
 def normalize_action(act):
-    return str(act).replace(' ', '').replace('(', '__').replace(')', '').replace(',', '_')
+    return str(act).lower().replace(' ', '').replace('(', '__').replace(')', '').replace(',', '_')
 
 def str_to_atom(fluent, domain):
     return domain.language.get(fluent)()
@@ -154,3 +154,29 @@ def atomicize(fluents, init, goal, operators, dname = "atomic", pname = "atomicP
         problem.action(normalize_action(op.name), [], precondition=land(*pre, flat=True), effects=effs)
 
     return problem
+
+def force_plan(domain, plan, avoid = []):
+    
+    disabled = domain.language.predicate('disabled')
+
+    # Disable all the regular actions
+    for action in domain.actions.values():
+        if all([nm not in action.name for nm in avoid]):
+            action.precondition = land(*(action.precondition.subformulas), disabled(), flat=True)
+
+    # Create a new fluent for every action in the plan
+    step_fluents = [domain.language.predicate(f'forced-step-{i}') for i in range(len(plan))]
+
+    # Create a new action for every step in the plan
+    for i, act in enumerate(plan):
+        act_name = act[1:-1].split(' ')[0]
+        act_params = act[1:-1].split(' ')[1:]
+        new_name = act_name + '__' + '_'.join(act_params)
+        orig = str_to_action(new_name, domain)
+        pres = [f for f in orig.precondition.subformulas if 'disabled' not in str(f)] + [~step_fluents[i]()]
+        if i > 0:
+            pres.append(step_fluents[i-1]())
+        
+        domain.action(f'assess-step-{i}', [],
+                        precondition = land(*pres, flat=True),
+                        effects = orig.effects + [iofs.AddEffect(step_fluents[i]())])
