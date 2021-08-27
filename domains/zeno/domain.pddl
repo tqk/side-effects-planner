@@ -15,10 +15,10 @@
 (define (domain zeno-travel)
 (:requirements :typing)
 (:types flevel
-		people aircraft - objects
+		people aircraft - object
 		city)
 (:predicates
-	 (at ?x - objects ?c - city) (in ?p - objects ?a - aircraft) (fuel-level ?a - aircraft ?l - flevel) (next ?l1 - flevel ?l2 - flevel)  )
+	 (at ?x - object ?c - city) (in ?p - object ?a - aircraft) (fuel-level ?a - aircraft ?l - flevel) (next ?l1 - flevel ?l2 - flevel)  )
 (:action board
  :parameters ( ?p - people
  				?a - aircraft 
@@ -52,7 +52,7 @@
 				?l2 - flevel 
 				?l3 - flevel)
  :precondition
-	(and  (at ?a ?c1) (fuel-level ?a ?l1) (next ?l2 ?l1) (next ?l3 ?l2))
+	(and (at ?a ?c1) (fuel-level ?a ?l1) (next ?l2 ?l1) (next ?l3 ?l2))
  :effect
 	(and (at ?a ?c2) (fuel-level ?a ?l3) (not (at ?a ?c1)) (not (fuel-level ?a ?l1))))
 
