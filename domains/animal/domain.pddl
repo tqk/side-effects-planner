@@ -67,7 +67,6 @@
         :effect (
             and 
                 (not(acting Truck))
-                (acting Beaver)
         )
 
     )
