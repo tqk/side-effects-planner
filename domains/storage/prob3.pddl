@@ -1,57 +1,37 @@
 ; two non-goal fluents has been modified 
-
-; Map of the Depots:       
-; 00   
-; *0   
-;---   
-; 0: depot0 area
-; *: Depot access point
-; =: Transit area
-
-(define (problem storage-5)
-(:domain Storage-Propositional)
+(define (problem ZTRAVEL-1-3)
+(:domain zeno-travel)
 (:objects
-	depot0-1-1 depot0-1-2 depot0-2-1 depot0-2-2 container-0-0 container-0-1 - storearea
-	hoist0 hoist1 - hoist
-	crate0 crate1 - crate
-	container0 - container
-	depot0 - depot
-	loadarea - transitarea)
-
+	plane1 - aircraft
+	person1 - people
+	person2 - people
+	person3 - people
+	city0 - city
+	city1 - city
+	city2 - city
+	fl0 - flevel
+	fl1 - flevel
+	fl2 - flevel
+	fl3 - flevel
+	fl4 - flevel
+	fl5 - flevel
+	fl6 - flevel
+	)
 (:init
-	(connected depot0-1-1 depot0-2-1)
-	(connected depot0-1-1 depot0-1-2)
-	(connected depot0-1-2 depot0-2-2)
-	(connected depot0-1-2 depot0-1-1)
-	(connected depot0-2-1 depot0-1-1)
-	(connected depot0-2-1 depot0-2-2)
-	(connected depot0-2-2 depot0-1-2)
-	(connected depot0-2-2 depot0-2-1)
-	(in depot0-1-1 depot0)
-	(in depot0-1-2 depot0)
-	(in depot0-2-1 depot0)
-	(in depot0-2-2 depot0)
-	(on crate0 container-0-0)
-	(on crate1 container-0-1)
-	(in crate0 container0)
-	(in crate1 container0)
-	(in container-0-0 container0)
-	(in container-0-1 container0)
-	(connected loadarea container-0-0) 
-	(connected container-0-0 loadarea)
-	(connected loadarea container-0-1) 
-	(connected container-0-1 loadarea)  
-	(connected depot0-2-1 loadarea)
-	(connected loadarea depot0-2-1)  
-	(clear depot0-1-1);
-	(clear depot0-2-2); 
-	(clear depot0-2-1);
-	;;
-	(at hoist0 loadarea)
-	(available hoist0)
-	(at hoist1 depot0-1-2)
-	(available hoist1))
-
+	(at plane1 city0)
+	(fuel-level plane1 fl2)
+	(at person1 city2)
+	(at person2 city1)
+	(at person3 city2)
+	(next fl0 fl1)
+	(next fl1 fl2)
+	(next fl2 fl3)
+	(next fl3 fl4)
+	(next fl4 fl5)
+	(next fl5 fl6)
+)
 (:goal (and
-	(in crate0 depot0)))
+	(at person2 city2)
+	))
+
 )
