@@ -44,8 +44,8 @@ def modify_domain(atomic_domain, stratified=False, assess=None):
 
             # If stratified, then the achievements must happen in order.
             if stratified and len(achieved_fluents) > 1:
-                pospre = tw.land(f, donePre(), achieved_fluents[-2](), flat=True)
-                negpre = tw.land(~f, donePre(), achieved_fluents[-2](), flat=True)
+                pospre = tw.land(f, donePre(), achieved_fluents[-2](), ~achieved(), flat=True)
+                negpre = tw.land(~f, donePre(), achieved_fluents[-2](), ~achieved(), flat=True)
             else:
                 pospre = f & donePre()
                 negpre = ~f & donePre()
