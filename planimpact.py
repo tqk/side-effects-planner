@@ -34,12 +34,13 @@ def modify_domain(atomic_domain, in_plans, stratified=False):
     # Add done predicate
     donePre = atomic_domain.language.predicate('done')
 
-    # # add done action
+    # add done action
+    #  for this, we allow ever agent to act, since it's required in their regressed goal
+    active_fluents = [tw.str_to_atom(f'acting_{ag.lower()}', atomic_domain) for ag in plandata]
     atomic_domain.action('done', [],
                          precondition = atomic_domain.goal,
-                         effects = [
-                             tw.iofs.AddEffect(donePre())
-                         ])
+                         effects = [tw.iofs.AddEffect(donePre())] +\
+                                   [tw.iofs.AddEffect(a) for a in active_fluents])
 
     # Don't allow regular actions after done
     for action in atomic_domain.actions.values():
