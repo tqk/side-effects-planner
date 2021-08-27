@@ -20,7 +20,7 @@
 (:types hoist surface place area - object
 	container depot - place
 	storearea transitarea - area
-	area crate - surface)
+	crate - surface)
 
 (:predicates (clear ?s - storearea)
 	     (in ?x - (either storearea crate) ?p - place)
