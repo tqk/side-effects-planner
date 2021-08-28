@@ -2,68 +2,62 @@
 
 
 
-
-    ; Domain: Moving people on/off airplains that fly around and refuel
-
-    ; Relevance: Can potentially add a pilot persona for the agent, and
-    ;  they can leave planes around the place
-
-
+    ; Domain: Cranes are agents that lift/lower crates and move around rooms+halls
+    
+    ; Relevance: Can augment to have cranes only able to lift certain crates, and
+    ;  this would cause the opportunitiy for necessary crates being left stuck at
+    ;  the bottom of the stack.
 
 
 
-(define (domain zeno-travel)
+
+
+; IPC5 Domain: Storage Propositional
+; Authors: Alfonso Gerevini and Alessandro Saetti 
+
+(define (domain Storage-Propositional)
 (:requirements :typing)
-(:types flevel
-		people aircraft - object
-		city)
-(:predicates
-	 (at ?x - object ?c - city) (in ?p - object ?a - aircraft) (fuel-level ?a - aircraft ?l - flevel) (next ?l1 - flevel ?l2 - flevel)  )
-(:action board
- :parameters ( ?p - people
- 				?a - aircraft 
- 				?c - city)
- :precondition
-	(and    (at ?p ?c) (at ?a ?c))
- :effect
-	(and (in ?p ?a) (not (at ?p ?c))))
+(:types hoist surface place area - object
+	container depot - place
+	storearea transitarea - area
+	crate storearea - surface)
 
-(:action debark
- :parameters ( ?p - people
- 				?a - aircraft 
-				?c - city)
- :precondition
-	(and  (in ?p ?a) (at ?a ?c))
- :effect
-	(and (at ?p ?c) (not (in ?p ?a))))
+(:predicates (clear ?s - storearea)
+	     (in ?x - surface ?p - place)
+	     (available ?h - hoist) 
+	     (lifting ?h - hoist ?c - crate) 
+	     (at ?h - hoist ?a - area)
+	     (on ?c - crate ?s - storearea) 
+	     (connected ?a1 ?a2 - area)
+             (compatible ?c1 ?c2 - crate)) 
 
-(:action fly
- :parameters ( ?a - aircraft ?c1 - city ?c2 - city ?l1 - flevel ?l2 - flevel)
- :precondition
-	(and    (at ?a ?c1) (fuel-level ?a ?l1) (next ?l2 ?l1))
- :effect
-	(and (at ?a ?c2) (fuel-level ?a ?l2) (not (at ?a ?c1)) (not (fuel-level ?a ?l1))))
+(:action lift
+ :parameters (?h - hoist ?c - crate ?a1 - storearea ?a2 - area ?p - place)
+ :precondition (and (connected ?a1 ?a2) (at ?h ?a2) (available ?h) 
+		    (on ?c ?a1) (in ?a1 ?p))
+ :effect (and (not (on ?c ?a1)) (clear ?a1)
+	      (not (available ?h)) (lifting ?h ?c) (not (in ?c ?p))))
+				
+(:action drop
+ :parameters (?h - hoist ?c - crate ?a1 - storearea ?a2 - area ?p - place)
+ :precondition (and (connected ?a1 ?a2) (at ?h ?a2) (lifting ?h ?c) 
+		    (clear ?a1) (in ?a1 ?p))
+ :effect (and (not (lifting ?h ?c)) (available ?h)
+	      (not (clear ?a1)) (on ?c ?a1) (in ?c ?p)))
 
-(:action zoom
- :parameters ( ?a - aircraft 
- 				?c1 - city 
-				?c2 - city 
-				?l1 - flevel 
-				?l2 - flevel 
-				?l3 - flevel)
- :precondition
-	(and (at ?a ?c1) (fuel-level ?a ?l1) (next ?l2 ?l1) (next ?l3 ?l2))
- :effect
-	(and (at ?a ?c2) (fuel-level ?a ?l3) (not (at ?a ?c1)) (not (fuel-level ?a ?l1))))
+(:action move
+ :parameters (?h - hoist ?from ?to - storearea)
+ :precondition (and (at ?h ?from) (clear ?to) (connected ?from ?to))
+ :effect (and (not (at ?h ?from)) (at ?h ?to) (not (clear ?to)) (clear ?from)))
 
-(:action refuel
- :parameters ( ?a - aircraft 
- 				?c - city 
-				?l - flevel 
-				?l1 - flevel)
- :precondition
-	(and   (fuel-level ?a ?l) (next ?l ?l1) (at ?a ?c))
- :effect
-	(and (fuel-level ?a ?l1) (not (fuel-level ?a ?l))))
+(:action go-out
+ :parameters (?h - hoist ?from - storearea ?to - transitarea)
+ :precondition (and (at ?h ?from) (connected ?from ?to))
+ :effect (and (not (at ?h ?from)) (at ?h ?to) (clear ?from)))
 
+(:action go-in
+ :parameters (?h - hoist ?from - transitarea ?to - storearea)
+ :precondition (and (at ?h ?from) (connected ?from ?to) (clear ?to))
+ :effect (and (not (at ?h ?from)) (at ?h ?to) (not (clear ?to))))
 )
+
