@@ -1,0 +1,13 @@
+{
+    "plane1": [
+        {
+            "goal": [
+                "at_plane1_city1"
+            ],
+            "plan": [
+                "zoom__plane1_city0_city1_fl2_fl1_fl0"
+            ]
+        }
+    ]
+
+}

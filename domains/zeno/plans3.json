@@ -1,0 +1,16 @@
+{
+    "plane1": [
+        {
+            "goal": [
+                "at_person2_city2"
+            ],
+            "plan": [
+                "fly__plane1_city0_city1_fl2_fl1",
+                "board__person2_plane1_city1",
+                "fly__plane1_city1_city2_fl1_fl0",
+                "debark__person2_plane1_city2"
+            ]
+        }
+    ]
+
+}
