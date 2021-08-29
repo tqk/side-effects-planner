@@ -374,13 +374,17 @@
     (clear pos-11-03)
     (clear pos-11-04)
     (clear pos-11-08)
+    (acting player-01)
   )
-  (:goal (and
+  (:goal (and ;goalimpact 
     (at player-01 pos-03-06)
     (at stone-01 pos-04-03)
     (at stone-02 pos-06-03)
     (at stone-03 pos-03-04)
     (at stone-04 pos-05-04)
+    (at-goal stone-05)
+  ))
+    (:goal (and
     (at-goal stone-05)
   ))
 )

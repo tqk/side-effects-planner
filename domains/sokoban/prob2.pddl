@@ -374,7 +374,7 @@
     (clear pos-11-03)
     (clear pos-11-04)
     (clear pos-11-08)
-
+    (acting player-01)
   )
   (:goal (and
     (at player-01 pos-03-06)
