@@ -22,7 +22,7 @@
     "hoist1": [
         {
             "goal": [
-                "in crate0 depot0"
+                "in_crate0_depot0"
             ],
             "plan": [
                 "move__hoist1_depot0-1-2_depot0-2-2", 
