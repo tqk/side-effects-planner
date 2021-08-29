@@ -50,8 +50,12 @@
 	(at hoist0 loadarea)
 	(available hoist0)
 	(at hoist1 depot0-1-2)
-	(available hoist1))
+	(available hoist1)
+
+
+)
 
 (:goal (and
-	(in crate0 depot0)))
+	(in crate0 depot0)
+	(in crate1 depot0)))
 )
