@@ -29,6 +29,7 @@
 	(next fl3 fl4)
 	(next fl4 fl5)
 	(next fl5 fl6)
+	(acting plane1)
 )
 (:goal (and
 	(at person2 city2)

@@ -29,7 +29,7 @@
 	(next fl3 fl4)
 	(next fl4 fl5)
 	(next fl5 fl6)
-
+	(acting plane1)
 )
 (:goal (and
 	(fuel-level plane1 fl0)

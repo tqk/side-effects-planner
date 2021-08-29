@@ -18,13 +18,14 @@
 		people aircraft - object
 		city)
 (:predicates
-	 (at ?x - object ?c - city) (in ?p - object ?a - aircraft) (fuel-level ?a - aircraft ?l - flevel) (next ?l1 - flevel ?l2 - flevel)  )
+	 (at ?x - object ?c - city) (in ?p - object ?a - aircraft) (fuel-level ?a - aircraft ?l - flevel) (next ?l1 - flevel ?l2 - flevel)  
+	 (acting ?a - aircraft))
 (:action board
  :parameters ( ?p - people
  				?a - aircraft 
  				?c - city)
  :precondition
-	(and    (at ?p ?c) (at ?a ?c))
+	(and    (at ?p ?c) (at ?a ?c) (acting ?a))
  :effect
 	(and (in ?p ?a) (not (at ?p ?c))))
 
@@ -33,14 +34,14 @@
  				?a - aircraft 
 				?c - city)
  :precondition
-	(and  (in ?p ?a) (at ?a ?c))
+	(and  (in ?p ?a) (at ?a ?c) (acting ?a))
  :effect
 	(and (at ?p ?c) (not (in ?p ?a))))
 
 (:action fly
  :parameters ( ?a - aircraft ?c1 - city ?c2 - city ?l1 - flevel ?l2 - flevel)
  :precondition
-	(and    (at ?a ?c1) (fuel-level ?a ?l1) (next ?l2 ?l1))
+	(and    (at ?a ?c1) (fuel-level ?a ?l1) (next ?l2 ?l1) (acting ?a))
  :effect
 	(and (at ?a ?c2) (fuel-level ?a ?l2) (not (at ?a ?c1)) (not (fuel-level ?a ?l1))))
 
@@ -52,7 +53,7 @@
 				?l2 - flevel 
 				?l3 - flevel)
  :precondition
-	(and (at ?a ?c1) (fuel-level ?a ?l1) (next ?l2 ?l1) (next ?l3 ?l2))
+	(and (at ?a ?c1) (fuel-level ?a ?l1) (next ?l2 ?l1) (next ?l3 ?l2) (acting ?a))
  :effect
 	(and (at ?a ?c2) (fuel-level ?a ?l3) (not (at ?a ?c1)) (not (fuel-level ?a ?l1))))
 
@@ -62,7 +63,7 @@
 				?l - flevel 
 				?l1 - flevel)
  :precondition
-	(and   (fuel-level ?a ?l) (next ?l ?l1) (at ?a ?c))
+	(and   (fuel-level ?a ?l) (next ?l ?l1) (at ?a ?c) (acting ?a))
  :effect
 	(and (fuel-level ?a ?l1) (not (fuel-level ?a ?l))))
 
