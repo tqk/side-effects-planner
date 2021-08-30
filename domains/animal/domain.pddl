@@ -84,6 +84,7 @@
                 (on Truck ?x)
                 (succ ?z ?y)
                 (acting Truck)
+                (budget ?y)
         )
         :effect (
             and 
