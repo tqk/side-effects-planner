@@ -54,5 +54,7 @@
 	(acting hoist0))
 
 (:goal (and
-	(in crate0 depot0)))
+	(in crate0 depot0)
+	(in crate1 depot0)
+	))
 )
