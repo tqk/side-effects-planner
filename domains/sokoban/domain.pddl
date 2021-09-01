@@ -1,18 +1,7 @@
-
-
-
-
-
     ; Domain: Vanilla sokoban
     
     ; Relevance: Purely on the map structure -- there may be solutions for the
     ;  leading agent that prevents other agents from accomplishing their task.
-
-
-
-
-
-
 (define (domain sokoban-sequential)
   (:requirements :typing)
   (:types thing location direction - object

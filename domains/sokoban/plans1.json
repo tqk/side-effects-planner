@@ -2,19 +2,46 @@
     "player-01": [
         {
             "goal": [
-                "at-goal_stone-05"
+                "at_stone-01_pos-05-04",
+                "at_stone-03_pos-04-05"
             ],
             "plan": [
-                "move__player-01_pos-03-06_pos-03-05_dir-up",
-                "push-to-nongoal__player-01_stone-03_pos-03-05_pos-03-04_pos-03-03_dir-up",
-                "move__player-01_pos-03-04_pos-04-04_dir-right",
-                "push-to-nongoal__player-01_stone-04_pos-04-04_pos-05-04_pos-06-04_dir-right",
-                "move__player-01_pos-05-04_pos-05-03_dir-up",
-                "push-to-nongoal__player-01_stone-02_pos-05-03_pos-06-03_pos-07-03_dir-right",
-                "push-to-nongoal__player-01_stone-02_pos-06-03_pos-07-03_pos-08-03_dir-right",
-                "push-to-nongoal__player-01_stone-05_pos-07-03_pos-07-04_pos-07-05_dir-down",
-                "push-to-goal__player-01_stone-05_pos-07-04_pos-07-05_pos-07-06_dir-down" 
+                "move__player-01_pos-01-01_pos-01-02_dir-down", 
+                "move__player-01_pos-01-02_pos-02-02_dir-right", 
+                "push-to-nongoal__player-01_stone-02_pos-02-02_pos-03-02_pos-04-02_dir-right", 
+                "push-to-nongoal__player-01_stone-02_pos-03-02_pos-04-02_pos-05-02_dir-right", 
+                "push-to-nongoal__player-01_stone-03_pos-04-02_pos-04-03_pos-04-04_dir-down", 
+                "push-to-goal__player-01_stone-03_pos-04-03_pos-04-04_pos-04-05_dir-down", 
+                "move__player-01_pos-04-04_pos-03-04_dir-left", 
+                "move__player-01_pos-03-04_pos-02-04_dir-left", 
+                "move__player-01_pos-02-04_pos-01-04_dir-left", 
+                "move__player-01_pos-01-04_pos-01-03_dir-up", 
+                "push-to-nongoal__player-01_stone-01_pos-01-03_pos-02-03_pos-03-03_dir-right", 
+                "push-to-nongoal__player-01_stone-01_pos-02-03_pos-03-03_pos-04-03_dir-right", 
+                "move__player-01_pos-03-03_pos-03-_dir-up", 
+                "move__player-01_pos-03-02_pos-04-02_dir-right", 
+                "push-to-nongoal__player-01_stone-01_pos-04-02_pos-04-03_pos-04-04_dir-down", 
+                "move__player-01_pos-04-03_pos-03-03_dir-left", 
+                "move__player-01_pos-03-03_pos-03-04_dir-down", 
+                "push-to-goal__player-01_stone-01_pos-03-04_pos-04-04_pos-05-04_dir-right"
+            ]
+        }
+    ],
+    "player-02": [
+        {
+            "goal": [
+                "at_stone-02_pos-05-05"
+            ],
+            "plan": [
 
+                "move__player-02_pos-02-01_pos-02-02_dir-down", 
+                "push-to-nongoal__player-02_stone-02_pos-02-02_pos-03-02_pos-04-02_dir-right", 
+                "push-to-nongoal__player-02_stone-02_pos-03-02_pos-04-02_pos-05-02_dir-right", 
+                "move__player-02_pos-04-02_pos-04-01_dir-up", 
+                "move__player-02_pos-04-01_pos-05-01_dir-right", 
+                "push-to-nongoal__player-02_stone-02_pos-05-01_pos-05-02_pos-05-03_dir-down", 
+                "push-to-goal__player-02_stone-02_pos-05-02_pos-05-03_pos-05-04_dir-down", 
+                "push-to-goal__player-02_stone-02_pos-05-03_pos-05-_pos-05-05_dir-down"
             ]
         }
     ]
