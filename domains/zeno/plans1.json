@@ -2,10 +2,54 @@
     "plane1": [
         {
             "goal": [
-                "fuel-level_plane1_fl0"
+                "fuel-level_plane1_fl5"
             ],
             "plan": [
-                "zoom__plane1_city0_city2_fl2_fl1_fl0"
+                "refuel__plane1_city0_fl2_fl3_fl2_fl1", 
+                "refuel__plane1_city0_fl3_fl4_fl1_fl0", 
+                "fly__plane1_city0_city2_fl4_fl3", 
+                "refuel__plane1_city2_fl3_fl4_fl2_fl1", 
+                "refuel__plane1_city2_fl4_fl5_fl1_fl0"
+            ]
+        },
+        {
+            "goal": [
+                "fuel-level_plane1_fl5"
+            ],
+            "plan": [
+                "refuel__plane1_city0_fl2_fl3_fl2_fl1", 
+                "refuel__plane1_city0_fl3_fl4_fl1_fl0", 
+                "fly__plane1_city0_city1_fl4_fl3", 
+                "refuel__plane1_city1_fl3_fl4_fl2_fl1", 
+                "refuel__plane1_city1_fl4_fl5_fl1_fl0"
+            ]
+        },
+        {
+            "goal": [
+                "fuel-level_plane1_fl5"
+            ],
+            "plan": [
+                "refuel__plane1_city0_fl2_fl3_fl2_fl1", 
+                "fly__plane1_city0_city1_fl3_fl2", 
+                "refuel__plane1_city1_fl2_fl3_fl2_fl1", 
+                "refuel__plane1_city1_fl3_fl4_fl1_fl0",
+                "fly__plane1_city1_city2_fl4_fl3", 
+                "refuel__plane1_city2_fl3_fl4_fl2_fl1", 
+                "refuel__plane1_city2_fl4_fl5_fl1_fl0"
+            ]
+        },
+        {
+            "goal": [
+                "fuel-level_plane1_fl5"
+            ],
+            "plan": [
+                "refuel__plane1_city0_fl2_fl3_fl2_fl1", 
+                "fly__plane1_city0_city2_fl3_fl2", 
+                "refuel__plane1_city2_fl2_fl3_fl2_fl1", 
+                "refuel__plane1_city2_fl3_fl4_fl1_fl0",
+                "fly__plane1_city2_city1_fl4_fl3", 
+                "refuel__plane1_city1_fl3_fl4_fl2_fl1", 
+                "refuel__plane1_city1_fl4_fl5_fl1_fl0"
             ]
         }
     ],

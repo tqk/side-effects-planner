@@ -2,33 +2,68 @@
     "plane1": [
         {
             "goal": [
-                "at_person2_city2"
+                "at_person1_city0",
+                "at_person2_city0"
             ],
-            "plan": [
-                "fly__plane1_city0_city1_fl2_fl1",
-                "board__person2_plane1_city1",
-                "fly__plane1_city1_city2_fl1_fl0",
-                "debark__person2_plane1_city2"
+            "plan": [       
+                "fly__plane1_city0_city2_fl2_fl1", 
+                "board__person1_plane1_city2", 
+                "fly__plane1_city2_city0_fl1_fl0", 
+                "debark__person1_plane1_city0", 
+                "refuel__plane1_city0_fl0_fl1_fl2_fl1", 
+                "fly__plane1_city0_city1_fl1_fl0", 
+                "refuel__plane1_city1_fl0_fl1_fl2_fl1", 
+                "board__person2_plane1_city1", 
+                "fly__plane1_city1_city0_fl1_fl0", 
+                "debark__person2_plane1_city0" 
             ]
-        }
-    ],
-    "plane2": [
+        },
         {
             "goal": [
                 "at_person1_city0",
                 "at_person2_city0"
             ],
             "plan": [       
-                "fly__plane2_city1_city2_fl2_fl1", 
-                "board__person1_plane2_city2", 
-                "fly__plane2_city2_city0_fl1_fl0", 
-                "debark__person1_plane2_city0", 
-                "refuel__plane2_city0_fl0_fl1_fl2_fl1", 
-                "fly__plane2_city0_city1_fl1_fl0", 
-                "refuel__plane2_city1_fl0_fl1_fl2_fl1", 
+                "fly__plane1_city0_city2_fl2_fl1", 
+                "board__person1_plane1_city2", 
+                "board__person3_plane1_city2",
+                "fly__plane1_city2_city0_fl1_fl0", 
+                "debark__person1_plane1_city0", 
+                "debark__person3_plane1_city0",
+                "refuel__plane1_city0_fl0_fl1_fl2_fl1", 
+                "fly__plane1_city0_city1_fl1_fl0", 
+                "refuel__plane1_city1_fl0_fl1_fl2_fl1", 
+                "board__person2_plane1_city1", 
+                "fly__plane1_city1_city0_fl1_fl0", 
+                "debark__person2_plane1_city0" 
+            ]
+        },
+        {
+            "goal": [
+                "at_person1_city0",
+                "at_person2_city0"
+            ],
+            "plan": [       
+                "fly__plane1_city0_city2_fl2_fl1", 
+                "board__person1_plane1_city2", 
+                "fly__plane1_city2_city1_fl1_fl0", 
+                "refuel__plane1_city1_fl0_fl1_fl2_fl1", 
+                "board__person2_plane1_city1",
+                "fly__plane1_city1_city0_fl1_fl0", 
+                "debark__person1_plane1_city0", 
+                "debark__person2_plane1_city0" 
+            ]
+        }
+    ],
+    "plane2": [
+        {
+            "goal": [
+                "at_person2_city2"
+            ],
+            "plan": [
                 "board__person2_plane2_city1", 
-                "fly__plane2_city1_city0_fl1_fl0", 
-                "debark__person2_plane2_city0" 
+                "zoom__plane2_city1_city2_fl2_fl1_fl0", 
+                "debark__person2_plane2_city2"  
             ]
         }
     ]

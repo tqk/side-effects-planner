@@ -54,11 +54,8 @@
 	(acting hoist0))
 
 (:goal (and
-	(on crate0 depot0-1-2);
-	(at hoist0 depot0-2-1))
+	(in crate1 depot0))
 )
 
-;(:goal (and
-;	(in crate0 depot0))
-;)
+
 )
