@@ -55,7 +55,7 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
                              precondition = mode_resetting(),
                              effects = [tw.iofs.AddEffect(f(), orig_to_cloned[f]()) for f in orig_fluents] + \
                                         [tw.iofs.DelEffect(f(), ~orig_to_cloned[f]()) for f in orig_fluents] + \
-                                        [tw.iofs.DelEffect(f()) for f in acting_fluents if ag not in str(f.name)] + \
+                                        [tw.iofs.DelEffect(f()) for f in acting_fluents if ag.lower() not in str(f.name)] + \
                                         [tw.iofs.DelEffect(mode_resetting()), tw.iofs.AddEffect(actor())])
     
     # Add the forced plan as a prefix.
