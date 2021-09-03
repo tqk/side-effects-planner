@@ -45,12 +45,14 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
                                     [tw.iofs.DelEffect(f()) for f in acting_fluents] + \
                                     [tw.iofs.AddEffect(mode_confirming()), tw.iofs.AddEffect(mode_resetting())])
     
+    def get_actor_fluent(ag):
+        for f in acting_fluents:
+            if str(f.name).split('acting_')[1] in ag.lower():
+                return f
+        
     # Action to reset the state for each acting agent
     for ag in goaldata:
-        actor = None
-        for f in acting_fluents:
-            if ag.lower() in str(f.name):
-                actor = f
+        actor = get_actor_fluent(ag)
         atomic_domain.action('reset_'+ag, [],
                              precondition = mode_resetting(),
                              effects = [tw.iofs.AddEffect(f(), orig_to_cloned[f]()) for f in orig_fluents] + \
@@ -68,11 +70,13 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
         achieved = atomic_domain.language.predicate(f'achieved_{agent}')
         achieved_fluents.append(achieved)
 
+        actor = get_actor_fluent(agent)
+
         # If stratified, then the achievements must happen in order.
         if stratified and len(achieved_fluents) > 1:
-            pre = tw.land(~achieved(), achieved_fluents[-2](), mode_confirming(), ~mode_resetting(), flat=True)
+            pre = tw.land(actor(), ~achieved(), achieved_fluents[-2](), mode_confirming(), ~mode_resetting(), flat=True)
         else:
-            pre = tw.land(~achieved(), mode_confirming(), ~mode_resetting(), flat=True)
+            pre = tw.land(actor(), ~achieved(), mode_confirming(), ~mode_resetting(), flat=True)
 
         atomic_domain.action(f'ignore_{agent}', [],
                              precondition = pre,
@@ -86,9 +90,9 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
 
         # If stratified, then the achievements must happen in order.
         if stratified and len(achieved_fluents) > 1:
-            pre = tw.land(*statef, ~achieved(), mode_confirming(), ~mode_resetting(), achieved_fluents[-2](), flat=True)
+            pre = tw.land(*statef, actor(), ~achieved(), mode_confirming(), ~mode_resetting(), achieved_fluents[-2](), flat=True)
         else:
-            pre = tw.land(*statef, ~achieved(), mode_confirming(), ~mode_resetting(), flat=True)
+            pre = tw.land(*statef, actor(), ~achieved(), mode_confirming(), ~mode_resetting(), flat=True)
 
         atomic_domain.action(f'achieve_{agent}_{i}', [],
                                 precondition = pre,
