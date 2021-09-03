@@ -1,0 +1,95 @@
+{   
+    "robot1": [
+        {
+            "goal": [
+                "painted_tile1-2_white",
+                "painted_tile2-1_white",
+                "painted_tile2-3_white",
+                "painted_tile3-2_white"
+            ],
+            "plan": [
+                "right__robot1_tile0-1_tile0-2", 
+                "paint-up__robot1_tile1-2_tile0-2_white", 
+                "right__robot1_tile0-2_tile0-3", 
+                "up__robot1_tile0-3_tile1-3", 
+                "paint-up__robot1_tile2-3_tile1-3_white", 
+                "down__robot1_tile1-3_tile0-3", 
+                "left__robot1_tile0-3_tile0-2", 
+                "left__robot1_tile0-2_tile0-1", 
+                "up__robot1_tile0-1_tile1-1", 
+                "up__robot1_tile1-1_tile2-1", 
+                "up__robot1_tile2-1_tile3-1", 
+                "paint-down__robot1_tile2-1_tile3-1_white", 
+                "right__robot1_tile3-1_tile3-2", 
+                "up__robot1_tile3-2_tile4-2", 
+                "paint-down__robot1_tile3-2_tile4-2_white"
+            ]
+        },
+        {
+            "goal": [
+                "painted_tile1-2_white",
+                "painted_tile2-1_white",
+                "painted_tile2-3_white",
+                "painted_tile3-2_white"
+            ],
+            "plan": [
+                "right__robot1_tile0-1_tile0-2", 
+                "paint-up__robot1_tile1-2_tile0-2_white", 
+                "left__robot1_tile0-2_tile0-1", 
+                "up__robot1_tile0-1_tile1-1", 
+                "paint-up__robot1_tile2-1_tile1-1_white", 
+                "down__robot1_tile1-1_tile0-1", 
+                "right__robot1_tile0-1_tile0-2", 
+                "right__robot1_tile0-2_tile0-3", 
+                "up__robot1_tile0-3_tile1-3", 
+                "up__robot1_tile1-3_tile2-3", 
+                "up__robot1_tile2-3_tile3-3", 
+                "up__robot1_tile3-3_tile4-3", 
+                "left__robot1_tile4-3_tile4-2",
+                "paint-down__robot1_tile3-2_tile4-2_white",
+                "right__robot1_tile4-2_tile4-3",
+                "down__robot1_tile4-3_tile3-3", 
+                "paint-down__robot1_tile2-3_tile3-3_white"   
+            ]
+        },
+        {
+            "goal": [
+                "painted_tile1-2_white",
+                "painted_tile2-1_white",
+                "painted_tile2-3_white",
+                "painted_tile3-2_white"
+            ],
+            "plan": [
+                "up__robot1_tile0-1_tile1-1", 
+                "up__robot1_tile1-1_tile2-1",
+                "up__robot1_tile2-1_tile3-1",
+                "up__robot1_tile3-1_tile4-1",
+                "right__robot1_tile4-1_tile4-2", 
+                "paint-down__robot1_tile3-2_tile4-2_white",
+                "right__robot1_tile4-2_tile4-3",
+                "down__robot1_tile4-3_tile3-3", 
+                "down__robot1_tile3-3_tile2-3",
+                "down__robot1_tile2-3_tile1-3",  
+                "paint-up__robot1_tile2-3_tile1-3_white",
+                "down__robot1_tile1-3_tile0-3", 
+                "left__robot1_tile0-3_tile0-2",
+                "paint-up__robot1_tile1-2_tile0-2_white",
+                "left__robot1_tile0-2_tile0-1",
+                "up__robot1_tile0-1_tile1-1", 
+                "paint-up__robot1_tile2-1_tile1-1_white"
+            ]
+        }
+    ],
+    "robot2": [
+        {
+            "goal": [
+                "painted_tile0-3_black"
+            ],
+            "plan": [
+                "right__robot2_tile2-2_tile2-3", 
+                "down__robot2_tile2-3_tile1-3", 
+                "paint-down__robot2_tile0-3_tile1-3_black"
+            ]
+        }
+    ]
+}
