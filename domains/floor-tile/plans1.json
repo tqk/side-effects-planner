@@ -62,8 +62,9 @@
                 "painted_tile0-3_black"
             ],
             "plan": [
-                "right__robot2_tile2-2_tile2-3", 
-                "down__robot2_tile2-3_tile1-3", 
+                "down__robot2_tile2-2_tile1-2", 
+                "paint-down__robot2_tile0-2_tile1-2_black", 
+                "right__robot2_tile1-2_tile1-3", 
                 "paint-down__robot2_tile0-3_tile1-3_black"
             ]
         }

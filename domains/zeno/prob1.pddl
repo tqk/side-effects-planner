@@ -37,14 +37,12 @@
 	(next fl3 fl4)
 	(next fl4 fl5)
 	(next fl5 fl6)
-	(acting plane1)
+	(acting plane2)
 	
 )
 (:goal (and ;plane1
-	(fuel-level plane1 fl5)
-	))
-;(:goal (and ;plane2
-;	(at person1 city0)
-;	))
+	(at person1 city0))
+)
+
 
 )

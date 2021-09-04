@@ -37,13 +37,10 @@
 	(next fl3 fl4)
 	(next fl4 fl5)
 	(next fl5 fl6)
-	(acting plane1)
+	(acting plane2)
 )
+
 (:goal (and 
-	(at person1 city0)
 	(at person3 city0)
-))
-;(:goal (and 
-;	(at person3 city0)
-;	))
+	))
 )

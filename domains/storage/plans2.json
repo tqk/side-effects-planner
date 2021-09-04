@@ -69,18 +69,6 @@
                 "lift__hoist1_crate0_container-0-0_loadarea_container0", 
                 "drop__hoist1_crate0_depot0-2-1_loadarea_depot0"
             ]
-        },
-        {
-            "goal": [
-                "in_crate1_depot0"
-            ],
-            "plan": [
-                "move__hoist1_depot0-1-2_depot0-1-1", 
-                "move__hoist1_depot0-1-1_depot0-2-1", 
-                "go-out__hoist1_depot0-2-1_loadarea", 
-                "lift__hoist1_crate0_container-0-0_loadarea_container0", 
-                "drop__hoist1_crate0_depot0-2-1_loadarea_depot0"
-            ]
         }
     ]
 }

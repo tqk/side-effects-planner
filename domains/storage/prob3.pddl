@@ -51,10 +51,10 @@
 	(available hoist0)
 	(at hoist1 depot0-1-2)
 	(available hoist1)
-	(acting hoist0))
+	(acting hoist1))
 
 (:goal (and
-	(in crate0 depot0)
-	(in crate1 depot0)
+	(on crate0 depot0-1-1)
+	(on crate1 depot0-2-2)
 	))
 )

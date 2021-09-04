@@ -72,12 +72,11 @@
    (left tile3-2 tile3-3)
    (left tile4-1 tile4-2)
    (left tile4-2 tile4-3)
-   (acting robot1)
+   (acting robot2)
 )
  (:goal (and
-    (painted tile1-2 white)
-    (painted tile2-1 white)
-    (painted tile2-3 white)
+    (painted tile0-3 black)
+    (painted tile0-2 black)
 ))
 
 
