@@ -162,7 +162,10 @@ def force_plan(domain, plan, avoid = []):
     # Disable all the regular actions
     for action in domain.actions.values():
         if all([nm not in action.name for nm in avoid]):
-            action.precondition = land(*(action.precondition.subformulas), disabled(), flat=True)
+            if isinstance(action.precondition, Atom):
+                action.precondition = land(action.precondition, disabled(), flat=True)
+            else:
+                action.precondition = land(*(action.precondition.subformulas), disabled(), flat=True)
 
     # Create a new fluent for every action in the plan
     step_fluents = [domain.language.predicate(f'forced-step-{i}') for i in range(len(plan))]
