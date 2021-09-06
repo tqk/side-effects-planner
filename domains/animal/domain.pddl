@@ -20,7 +20,7 @@
         (adjacent ?x - grid ?y - grid) ; the grid x is adjacent to the grid y
         (on ?x - object ?y - grid)  ; the object x is on the grid y
         (clean ?x - grid) ; the grid x is currently clean, animals can step on it
-        (polluted ?x - grid) ; the grid x is currently pollusted, animals can not step on it
+        (polluted ?x - grid) ; the grid x is currently polluted, animals can not step on it
         (succ ?x - constant ?y - constant); y = x + 1
         (budget ?x - constant) ; budget is used to keep track of the remaining cleaning times
         (acting ?x - object); acting shows which agent is executing

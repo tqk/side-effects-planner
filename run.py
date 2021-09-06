@@ -70,18 +70,18 @@ if __name__ == '__main__':
             print(f"Running on problem {problem} of {domain} domain")
             
             # first, just solve the problem
-            #print(planner(domain, problem))
+            print(planner(domain, problem))
             
             # find the fluent-preserving compilation
             
-            #print(compilation(domain, problem, 'fluent'))
+            print(compilation(domain, problem, 'fluent'))
             # solve that
-            #print(planner(domain,problem,'fluent'))
+            print(planner(domain,problem,'fluent'))
             
             # find the plan-preserving compilation
-            #print(compilation(domain, problem, 'plan'))
+            print(compilation(domain, problem, 'plan'))
             # solve that
-            #print(planner(domain,problem,'plan'))
+            print(planner(domain,problem,'plan'))
             
             
             # find the goal-preserving compilation

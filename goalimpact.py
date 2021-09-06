@@ -25,6 +25,7 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
 
     # Grab the agent acting fluents for use later on in the phases. Doesn't include initial 
     acting_fluents = list(filter(lambda x: 'acting' in str(x.name), atomic_domain.language.predicates))
+    # print(acting_fluents)
 
     # Clone all of the fluents for saving
     orig_fluents = [f for f in atomic_domain.language.predicates if f.arity == 0 and 'acting' not in str(f.name)]
@@ -47,7 +48,7 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
     
     def get_actor_fluent(ag):
         for f in acting_fluents:
-            if str(f.name).split('acting_')[1] in ag.lower():
+            if ag.lower().startswith(str(f.name).split('acting_')[1]):
                 return f
         
     # Action to reset the state for each acting agent
