@@ -23,7 +23,7 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
             agname = agent + str(i)
             goals[agname] = set([tw.str_to_atom(f, atomic_domain) for f in goal['goal']])
 
-    # Grab the agent acting fluents for use later on in the phases. Doesn't include initial 
+    # Grab the agent acting fluents for use later on in the phases. Doesn't include initial
     acting_fluents = list(filter(lambda x: 'acting' in str(x.name), atomic_domain.language.predicates))
     # print(acting_fluents)
 
@@ -45,12 +45,12 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
                          effects = [tw.iofs.AddEffect(orig_to_cloned[f](), f()) for f in orig_fluents] + \
                                     [tw.iofs.DelEffect(f()) for f in acting_fluents] + \
                                     [tw.iofs.AddEffect(mode_confirming()), tw.iofs.AddEffect(mode_resetting())])
-    
+
     def get_actor_fluent(ag):
         for f in acting_fluents:
             if ag.lower().startswith(str(f.name).split('acting_')[1]):
                 return f
-        
+
     # Action to reset the state for each acting agent
     for ag in goaldata:
         actor = get_actor_fluent(ag)
@@ -60,10 +60,10 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
                                         [tw.iofs.DelEffect(f(), ~orig_to_cloned[f]()) for f in orig_fluents] + \
                                         [tw.iofs.DelEffect(f()) for f in acting_fluents if ag.lower() not in str(f.name)] + \
                                         [tw.iofs.DelEffect(mode_resetting()), tw.iofs.AddEffect(actor())])
-    
+
     # Add the forced plan as a prefix.
     if assess:
-        tw.force_plan(atomic_domain, assess, avoid = ['done'])
+        tw.force_plan(atomic_domain, assess, avoid = ['done', 'clone', 'reset'])
 
     achieved_fluents = []
     for agent in goals:
