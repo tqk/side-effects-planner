@@ -17,75 +17,118 @@ logdir = "logs"
 
 def timed_run(command):
     
-    print(f"Running {command}")
+    #print(f"Running {command}")
     
     start = time.time()
     subprocess.call(command, shell=True, executable='/bin/bash')
     end = time.time()
-    return f"Time of {command}: {end-start}"
+    
+    print(f"Time of {command}:\n{end-start}\n")
+    
+    return end-start
 
-def filenames(domain, problem, compilation=None):
+def filenames(domain, problem, compilation=None, assess=None):
     d = f"domains/{domain}/domain.pddl"
     p = f"domains/{domain}/prob{problem}.pddl"
     if compilation is None:
         return (d, p)
     else:
-        return (f"{outdir}/{compilation}-{domain}-domain.pddl", f"{outdir}/{compilation}-{domain}-problem{problem}.pddl")
-def planfilename(domain, problem):
+        if assess is None:
+            assess2 = ""
+        else:
+            assess2 = "-assess-" + assess
+        return (f"{outdir}/{compilation}-{domain}-domain{assess2}.pddl", f"{outdir}/{compilation}-{domain}-problem{problem}{assess2}.pddl")
+    
+def plansfilename(domain, problem):
+    # gets name of file with lists of plans for domain and problem
     return f"domains/{domain}/plans{problem}.json"
 
-def planner(domain, problem, compilation=None, prog="downward --alias seq-opt-lmcut"):
-    domain_file, problem_file = filenames(domain, problem, compilation)
+def planname(domain, problem, compilation=None, assess=None):
+    # gets name to use for output plan
+    if compilation is None:
+        compilation = ""
+    if assess is None:
+        assess2 = ""
+    else:
+        assess2 = "-assess-" + assess
+    return f"{domain}{problem}{compilation}{assess2}.ipc"
+
+def planner(domain, problem, compilation=None, assess=None, prog="downward --alias seq-opt-lmcut"):
+    domain_file, problem_file = filenames(domain, problem, compilation, assess)
     
     if compilation is None: 
         compilation = ""
-    command = f"{prog} --plan-file {outdir}/{domain}{problem}{compilation}.ipc {domain_file} {problem_file} > {logdir}/{domain}{problem}{compilation}.txt"
+    command = f"{prog} --plan-file {outdir}/{planname(domain,problem,compilation,assess)} {domain_file} {problem_file} > {logdir}/{planname(domain,problem,compilation,assess)}.txt"
     
     return timed_run(command)
 
 
 
-def compilation(domain, problem, x):
+def compilation(domain, problem, x, assess=None):
     # x is "fluent", "plan", or "goal"
     domain_file, problem_file = filenames(domain, problem)
-    compiled_domain_file, compiled_problem_file = filenames(domain, problem, x)
+    compiled_domain_file, compiled_problem_file = filenames(domain, problem, x, assess)
     
     if x=="fluent":
         plan_file = ""
     else:
-        plan_file = planfilename(domain, problem)
+        plan_file = plansfilename(domain, problem)
+        
+    if assess is None:
+        assess2 = ""
+    else:
+        assess2 = f"--assess {outdir}/{assess}"
     
-    command = f"python3 {x}impact.py {domain_file} {problem_file} {plan_file} {compiled_domain_file} {compiled_problem_file}"
+    command = f"python3 {x}impact.py {assess2} {domain_file} {problem_file} {plan_file} {compiled_domain_file} {compiled_problem_file}"
 
     return timed_run(command)
 
+ def runtests(domain, problem):
+     
+    print(f"Running on problem {problem} of {domain} domain\n")
+    
+    # first, just solve the problem without trying to aviod SEs
+    planner(domain, problem)
+    
+    
+    # now evaluate how well that solution does at avoiding FSEs, PSEs, GSEs
+    for x in ['fluent', 'plan', 'goal']:
+    
+        compilation(domain, problem, x, assess=planname(domain, problem))
+        planner(domain, problem, x, assess=planname(domain, problem))
+        
+    break
+    
+    
+    # find the fluent-preserving compilation
+    
+    compilation(domain, problem, 'fluent')
+    # solve that
+    planner(domain,problem,'fluent')
+    
+    # now evaluate how well the solution does at avoiding PSEs and GSEs
+    # ...
+    break
+    
+    
+    # find the plan-preserving compilation
+    compilation(domain, problem, 'plan')
+    # solve that
+    planner(domain,problem,'plan')
+    
+    
+    # find the goal-preserving compilation
+    compilation(domain, problem, 'goal')
+    # solve that
+    planner(domain,problem,'goal', prog='lama')
 
 
 if __name__ == '__main__':
     
     for domain in problems:
-        print(f"Running on {domain} domain")
+        print(f"Running on {domain} domain\n")
         
         for problem in range(1, problems[domain]+1):
-            print(f"Running on problem {problem} of {domain} domain")
-            
-            # first, just solve the problem
-            print(planner(domain, problem))
-            
-            # find the fluent-preserving compilation
-            
-            print(compilation(domain, problem, 'fluent'))
-            # solve that
-            print(planner(domain,problem,'fluent'))
-            
-            # find the plan-preserving compilation
-            print(compilation(domain, problem, 'plan'))
-            # solve that
-            print(planner(domain,problem,'plan'))
-            
-            
-            # find the goal-preserving compilation
-            print(compilation(domain, problem, 'goal'))
-            # solve that
-            print(planner(domain,problem,'goal','lama'))
+            runtests(domain, problem)
+       
             
