@@ -43,16 +43,70 @@
                 "left__robot1_tile0-3_tile0-2", 
                 "left__robot1_tile0-2_tile0-1"
             ]
+        },
+
+
+        {
+            "goal": [
+                "painted_tile1-3_white"
+            ],
+            "plan": [
+                "right__robot1_tile0-1_tile0-2", 
+                "right__robot1_tile0-2_tile0-3", 
+                "paint-up__robot1_tile1-3_tile0-3_white"
+            ]
+        },
+        {
+            "goal": [
+                "painted_tile1-3_white"
+            ],
+            "plan": [
+                "up__robot1_tile0-1_tile1-1", 
+                "up__robot1_tile1-1_tile2-1", 
+                "up__robot1_tile2-1_tile3-1", 
+                "right__robot1_tile3-1_tile3-2", 
+                "right__robot1_tile3-2_tile3-3", 
+                "down__robot1_tile3-3_tile2-3",
+                "paint-down__robot1_tile1-3_tile2-3_white"
+            ]
+        },
+
+
+        {
+            "goal": [
+                "painted_tile3-3_white"
+            ],
+            "plan": [
+                "right__robot1_tile0-1_tile0-2", 
+                "up__robot1_tile0-2_tile1-2", 
+                "right__robot1_tile1-2_tile1-3", 
+                "up__robot1_tile1-3_tile2-3", 
+                "paint-up__robot1_tile3-3_tile2-3_white"
+            ]
+        },
+        {
+            "goal": [
+                "painted_tile3-3_white"
+            ],
+            "plan": [
+                "right__robot1_tile0-1_tile0-2", 
+                "right__robot1_tile0-2_tile0-3", 
+                "up__robot1_tile0-3_tile1-3", 
+                "up__robot1_tile1-3_tile2-3",
+                "paint-up__robot1_tile3-3_tile2-3_white"
+            ]
         }
     ],
+
+
+
     "robot2": [
         {
             "goal": [
                 "painted_tile0-3_black"
             ],
             "plan": [
-                "down__robot2_tile2-2_tile1-2", 
-                "paint-down__robot2_tile0-2_tile1-2_black", 
+                "down__robot2_tile2-2_tile1-2",  
                 "right__robot2_tile1-2_tile1-3", 
                 "paint-down__robot2_tile0-3_tile1-3_black"
             ]
