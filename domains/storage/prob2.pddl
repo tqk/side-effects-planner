@@ -43,15 +43,16 @@
 	(connected container-0-1 loadarea)  
 	(connected depot0-2-1 loadarea)
 	(connected loadarea depot0-2-1)  
-	(clear depot0-2-2)
-	(clear depot0-1-1)  
-	(at hoist0 depot0-2-1)
+	(clear depot0-2-2)  
+	(clear depot0-2-1) 
+	(at hoist0 depot0-1-1)
 	(available hoist0)
 	(at hoist1 depot0-1-2)
 	(available hoist1)
 	(acting hoist1))
 
 (:goal (and
-	(in crate1 container0)))
+	(in crate1 depot0)))
+
 )
 

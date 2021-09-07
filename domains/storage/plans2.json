@@ -4,7 +4,8 @@
             "goal": [
                 "in_crate0_depot0"
             ],
-            "plan": [               
+            "plan": [  
+                "move__hoist0_depot0-1-1_depot0-2-1",             
                 "go-out__hoist0_depot0-2-1_loadarea", 
                 "lift__hoist0_crate0_container-0-0_loadarea_container0", 
                 "drop__hoist0_crate0_depot0-2-1_loadarea_depot0"
@@ -14,7 +15,8 @@
             "goal": [
                 "in_crate0_depot0"
             ],
-            "plan": [               
+            "plan": [  
+                "move__hoist0_depot0-1-1_depot0-2-1",             
                 "go-out__hoist0_depot0-2-1_loadarea", 
                 "lift__hoist0_crate1_container-0-1_loadarea_container0", 
                 "go-in__hoist0_loadarea_depot0-2-1",                
@@ -25,35 +27,12 @@
             "goal": [
                 "in_crate0_depot0"
             ],
-            "plan": [               
+            "plan": [         
+                "move__hoist0_depot0-1-1_depot0-2-1",      
                 "go-out__hoist0_depot0-2-1_loadarea", 
                 "lift__hoist0_crate1_container-0-1_loadarea_container0", 
                 "go-in__hoist0_loadarea_depot0-2-1",                
                 "drop__hoist0_crate1_depot0-1-1_depot0-2-1_depot0"
-            ]
-        },
-        {
-            "goal": [
-                "in_crate0_depot0"
-            ],
-            "plan": [               
-                "go-out__hoist0_depot0-2-1_loadarea", 
-                "lift__hoist0_crate1_container-0-1_loadarea_container0", 
-                "go-in__hoist0_loadarea_depot0-2-1",                
-                "drop__hoist0_crate1_depot0-1-1_depot0-2-1_depot0",
-                "go-out__hoist0_depot0-2-1_loadarea"
-            ]
-        },
-        {
-            "goal": [
-                "in_crate0_depot0"
-            ],
-            "plan": [               
-                "go-out__hoist0_depot0-2-1_loadarea", 
-                "lift__hoist0_crate1_container-0-1_loadarea_container0", 
-                "go-in__hoist0_loadarea_depot0-2-1",                
-                "drop__hoist0_crate1_depot0-2-2_depot0-2-1_depot0",
-                "go-out__hoist0_depot0-2-1_loadarea"
             ]
         }
     ],
