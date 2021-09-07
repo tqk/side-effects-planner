@@ -188,3 +188,4 @@ def force_plan(domain, plan, avoid = []):
         domain.action(f'assess-step-{i}', [],
                         precondition = land(*pres, flat=True),
                         effects = orig.effects + [iofs.AddEffect(step_fluents[i]())])
+

@@ -9,6 +9,10 @@ USAGE = "\n\tpython3 fluentimpact.py [--assess plan.ipc] <in-domain.pddl> <in-pr
 
 
 def modify_domain(atomic_domain, stratified=False, assess=None):
+    
+    if assess is not None:
+        if len(assess) == 0: # if we're trying to evalute the empty plan, we don't need the goal
+            atomic_domain.goal = atomic_domain.init.as_atoms()[0]
 
     # Add done predicate
     donePre = atomic_domain.language.predicate('done')

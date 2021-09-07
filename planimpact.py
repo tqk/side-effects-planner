@@ -9,6 +9,10 @@ USAGE = "\n\tpython3 planimpact.py [--assess plan.ipc] <in-domain.pddl> <in-prob
 
 
 def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
+    if assess is not None:
+        if len(assess) == 0: # if we're trying to evalute the empty plan, we don't need the goal
+            atomic_domain.goal = atomic_domain.init.as_atoms()[0]
+    
 
     # Read the plans json from in_plans
     with open(in_plans, 'r') as f:
