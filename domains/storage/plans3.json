@@ -72,7 +72,7 @@
         
         {
             "goal": [
-                "on_crate0_depot0-2-2"
+                "on_crate1_depot0-1-1"
             ],
             "plan": [               
                 "lift__hoist0_crate1_container-0-1_loadarea_container0", 
