@@ -48,7 +48,7 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
             action.precondition = tw.land(*(action.precondition.subformulas), ~donePre(), flat=True)
 
     # Add the forced plan as a prefix.
-    if assess:
+    if assess is not None:
         tw.force_plan(atomic_domain, assess, avoid = ['done'])
 
     achieved_fluents = []

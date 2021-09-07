@@ -115,7 +115,7 @@ def runtests(domain, problem):
             program = 'lama'
         else:
             program = None
-        planner(domain, problem, x, assess=planname(domain, problem), prog=program)
+        planner(domain, problem, x, assess="empty.ipc", prog=program)
     
     
     # first, just solve the problem without trying to aviod SEs
@@ -185,14 +185,14 @@ def runtests(domain, problem):
 if __name__ == '__main__':
     
     runtests('wildlife',1)
-    runtests('storage',1)
-    runtests('storage',2)
-    runtests('storage',3)
-    runtests('zeno',1)
-    runtests('zeno',2)
-    runtests('zeno',3)
-    runtests('floor-tile',1)
-    runtests('floor-tile',2)
-    runtests('floor-tile',3)
+    #runtests('storage',1)
+    #runtests('storage',2)
+    #runtests('storage',3)
+    #runtests('zeno',1)
+    #runtests('zeno',2)
+    #runtests('zeno',3)
+    #runtests('floor-tile',1)
+    #runtests('floor-tile',2)
+    #runtests('floor-tile',3)
     
             

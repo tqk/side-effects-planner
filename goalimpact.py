@@ -66,7 +66,7 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None, skip_d
                                         [tw.iofs.DelEffect(mode_resetting()), tw.iofs.AddEffect(actor())])
 
     # Add the forced plan as a prefix.
-    if assess:
+    if assess is not None:
         tw.force_plan(atomic_domain, assess, avoid = ['done', 'clone', 'reset'])
 
     achieved_fluents = []

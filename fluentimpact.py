@@ -26,7 +26,7 @@ def modify_domain(atomic_domain, stratified=False, assess=None):
             action.precondition = tw.land(*(action.precondition.subformulas), ~donePre(), flat=True)
 
     # Add the forced plan as a prefix.
-    if assess:
+    if assess is not None:
         tw.force_plan(atomic_domain, assess, avoid = ['done'])
 
     achieved_fluents = []
@@ -37,7 +37,7 @@ def modify_domain(atomic_domain, stratified=False, assess=None):
         goal = atomic_domain.goal.subformulas
 
     for f in [f() for f in atomic_domain.language.predicates if f.arity == 0]:
-        if f != donePre() and f not in goal and 'forced' not in str(f) and 'disabled' not in str(f):
+        if f != donePre() and f not in goal and 'forced' not in str(f) and 'enabled' not in str(f):
 
             achieved = atomic_domain.language.predicate('achieved_'+tw.normalize_fluent(f))
             achieved_fluents.append(achieved)
