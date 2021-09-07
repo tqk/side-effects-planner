@@ -26,7 +26,6 @@ def timed_run(command):
     
     print(f"Time of {command}:\n{end-start}\n")
     
-    return end-start
 
 def filenames(domain, problem, compilation=None, assess=None):
     d = f"domains/{domain}/domain.pddl"
@@ -60,11 +59,25 @@ def planner(domain, problem, compilation=None, assess=None, prog=None):
     
     domain_file, problem_file = filenames(domain, problem, compilation, assess)
     
+    
+    outputfile = f"{outdir}/{planname(domain,problem,compilation,assess)}"
+    
     if compilation is None: 
         compilation = ""
-    command = f"{prog} --plan-file {outdir}/{planname(domain,problem,compilation,assess)} {domain_file} {problem_file} > {logdir}/{planname(domain,problem,compilation,assess)}.txt"
+    command = f"{prog} --plan-file {outputfile} {domain_file} {problem_file} > {logdir}/{planname(domain,problem,compilation,assess)}.txt"
     
-    return timed_run(command)
+    timed_run(command)
+    
+    if prog=='lama': # find name of the last file that was output
+        number = 1
+        while os.path.isfile(f"{outputfile}.{number+1}"):
+            number = number+1
+        outputfile = f"{outputfile}.{number}"
+        assert os.path.isfile(outputfile)
+            
+    print(outputfile)
+    subprocess.call(f"tail -n1 {outputfile}", shell=True, executable='/bin/bash')
+    print()
 
 
 
@@ -91,6 +104,19 @@ def compilation(domain, problem, x, assess=None):
 def runtests(domain, problem):
      
     print(f"Running on problem {problem} of {domain} domain\n")
+    
+    print("Sanity check: how many side effects are avoided by an empty plan?\n")
+    for x in ['fluent', 'plan', 'goal']:
+        
+        print(f"Assessing the empty plan at {x}-preservation\n")
+    
+        compilation(domain, problem, x, assess="empty.ipc")
+        if x=='goal': 
+            program = 'lama'
+        else:
+            program = None
+        planner(domain, problem, x, assess=planname(domain, problem), prog=program)
+    
     
     # first, just solve the problem without trying to aviod SEs
     
@@ -159,20 +185,14 @@ def runtests(domain, problem):
 if __name__ == '__main__':
     
     runtests('wildlife',1)
-    #runtests('storage',1)
-    #runtests('storage',2)
-    #runtests('storage',3)
-    #runtests('zeno',1)
-    #runtests('zeno',2)
-    #runtests('zeno',3)
-    #runtests('floor-tile',1)
-    #runtests('floor-tile',2)
-    #runtests('floor-tile',3)
+    runtests('storage',1)
+    runtests('storage',2)
+    runtests('storage',3)
+    runtests('zeno',1)
+    runtests('zeno',2)
+    runtests('zeno',3)
+    runtests('floor-tile',1)
+    runtests('floor-tile',2)
+    runtests('floor-tile',3)
     
-    #for domain in problems:
-    #    print(f"Running on {domain} domain\n")
-    #    
-    #    for problem in range(1, problems[domain]+1):
-    #        runtests(domain, problem)
-       
             

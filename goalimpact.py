@@ -10,7 +10,7 @@ USAGE = "\n\tpython3 goalimpact.py [--assess plan.ipc] <in-domain.pddl> <in-prob
 
 
 
-def modify_domain(atomic_domain, in_plans, stratified=False, assess=None, skip_duplicate_goals=False):
+def modify_domain(atomic_domain, in_plans, stratified=False, assess=None, skip_duplicate_goals=True):
 
     # Read the plans json from in_plans
     with open(in_plans, 'r') as f:
