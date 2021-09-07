@@ -106,7 +106,7 @@ def runtests(domain, problem):
     print(f"Running on problem {problem} of {domain} domain\n")
     
     print("Sanity check: how many side effects are avoided by an empty plan?\n")
-    for x in ['fluent', 'plan', 'goal']:
+    for x in []:#'fluent', 'plan', 'goal']:
         
         print(f"Assessing the empty plan at {x}-preservation\n")
     
@@ -185,14 +185,14 @@ def runtests(domain, problem):
 if __name__ == '__main__':
     
     runtests('wildlife',1)
-    #runtests('storage',1)
-    #runtests('storage',2)
-    #runtests('storage',3)
-    #runtests('zeno',1)
-    #runtests('zeno',2)
-    #runtests('zeno',3)
-    #runtests('floor-tile',1)
-    #runtests('floor-tile',2)
-    #runtests('floor-tile',3)
+    runtests('storage',1)
+    runtests('storage',2)
+    runtests('storage',3)
+    runtests('zeno',1)
+    runtests('zeno',2)
+    runtests('zeno',3)
+    runtests('floor-tile',1)
+    runtests('floor-tile',2)
+    runtests('floor-tile',3)
     
             
