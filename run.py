@@ -4,7 +4,7 @@ import time
 from utils import convert_plan
 
 #problems = {
-#    'animal': 1,
+#    'wildlife': 1,
 #    'floor-tile': 3,
 #    'storage': 3,
 #    'zeno': 3
@@ -158,9 +158,9 @@ def runtests(domain, problem):
 
 if __name__ == '__main__':
     
-    #runtests('animal',1)
+    runtests('wildlife',1)
     #runtests('storage',1)
-    runtests('storage',2)
+    #runtests('storage',2)
     #runtests('storage',3)
     #runtests('zeno',1)
     #runtests('zeno',2)

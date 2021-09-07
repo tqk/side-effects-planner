@@ -18,7 +18,7 @@
         
 
         (on Tree G11)   (on Fountain G13)
-        (on Beaver G21) (on Racoon G23)
+        (on Beaver G21) (on Raccoon G23)
         (on Truck G31)  (on Wood G33)   (on Factory G34)
         (clean G11) (clean G12) (clean G13) (clean G14)
         (clean G21) (clean G22) (clean G23) (clean G24)
