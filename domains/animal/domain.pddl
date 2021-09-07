@@ -12,7 +12,7 @@
         G21 G22 G23 G24 - grid
         G31 G32 G33 G34 - grid
         Tree Wood Fountain Factory Truck - others
-        Beaver Racoon - animal
+        Beaver Raccoon - animal
         N0 N1 N2 N3 - constant ; constant is used to count the number of times, that truck can clean the polluted grid
         
     )

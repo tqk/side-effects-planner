@@ -138,7 +138,6 @@ def runtests(domain, problem):
         else:
             program = None
         planner(domain, problem, x, assess=converted_plan, prog=program)
-    return
  
     
     # find the plan-preserving compilation
@@ -161,14 +160,14 @@ if __name__ == '__main__':
     
     #runtests('animal',1)
     #runtests('storage',1)
-    #runtests('storage',2)
+    runtests('storage',2)
     #runtests('storage',3)
     #runtests('zeno',1)
     #runtests('zeno',2)
     #runtests('zeno',3)
-    runtests('floor-tile',1)
-    runtests('floor-tile',2)
-    runtests('floor-tile',3)
+    #runtests('floor-tile',1)
+    #runtests('floor-tile',2)
+    #runtests('floor-tile',3)
     
     #for domain in problems:
     #    print(f"Running on {domain} domain\n")
