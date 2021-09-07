@@ -157,15 +157,20 @@ def atomicize(fluents, init, goal, operators, dname = "atomic", pname = "atomicP
 
 def force_plan(domain, plan, avoid = []):
     
-    disabled = domain.language.predicate('disabled')
+    enabled = domain.language.predicate('enabled')
 
-    # Disable all the regular actions
+    
     for action in domain.actions.values():
+        # Disable all the regular actions
         if all([nm not in action.name for nm in avoid]):
             if isinstance(action.precondition, Atom):
-                action.precondition = land(action.precondition, disabled(), flat=True)
+                action.precondition = land(action.precondition, enabled(), flat=True)
             else:
-                action.precondition = land(*(action.precondition.subformulas), disabled(), flat=True)
+                action.precondition = land(*(action.precondition.subformulas), enabled(), flat=True)
+
+        # If there is a clone action (only in the goal-preserving compilation), have it re-enable all actions
+        if action.name == 'clone':
+            action.effects += [iofs.AddEffect(enabled())]
 
     # Create a new fluent for every action in the plan
     step_fluents = [domain.language.predicate(f'forced-step-{i}') for i in range(len(plan))]
@@ -176,7 +181,7 @@ def force_plan(domain, plan, avoid = []):
         act_params = act[1:-1].split(' ')[1:]
         new_name = act_name + '__' + '_'.join(act_params)
         orig = str_to_action(new_name, domain)
-        pres = [f for f in orig.precondition.subformulas if 'disabled' not in str(f)] + [~step_fluents[i]()]
+        pres = [f for f in orig.precondition.subformulas if 'enabled' not in str(f)] + [~step_fluents[i]()]
         if i > 0:
             pres.append(step_fluents[i-1]())
         

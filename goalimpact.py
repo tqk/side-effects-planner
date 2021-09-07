@@ -124,7 +124,7 @@ if __name__ == '__main__':
         print(USAGE)
         exit(1)
 
-    print('\n\tCompiling problem...', end='')
+    #print('\n\tCompiling problem...', end='')
 
     domain_file = argv[0]
     problem_file = argv[1]
@@ -141,4 +141,4 @@ if __name__ == '__main__':
 
     tw.write_pddl(modified_domain, out_domain_file, out_problem_file)
 
-    print('done!\n')
+    #print('done!\n')
