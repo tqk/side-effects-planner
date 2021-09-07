@@ -82,7 +82,7 @@
             ],
             "plan": [               
                 "lift__hoist1_crate0_depot0-2-1_loadarea_depot0", 
-                "drop__hoist1_crate0_container-0-_loadarea_container0"
+                "drop__hoist1_crate0_container-0-0_loadarea_container0"
             ]
         }
     ]
