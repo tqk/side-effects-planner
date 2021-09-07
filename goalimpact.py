@@ -10,7 +10,7 @@ USAGE = "\n\tpython3 goalimpact.py [--assess plan.ipc] <in-domain.pddl> <in-prob
 
 
 
-def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
+def modify_domain(atomic_domain, in_plans, stratified=False, assess=None, skip_duplicate_goals=False):
 
     # Read the plans json from in_plans
     with open(in_plans, 'r') as f:
@@ -18,10 +18,14 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None):
 
     # Compute the goal from the text description
     goals = {}
+    goal_hash = set()
     for agent in goaldata:
         for i, goal in enumerate(goaldata[agent]):
             agname = agent + str(i)
-            goals[agname] = set([tw.str_to_atom(f, atomic_domain) for f in goal['goal']])
+            ghash = '//'.join(sorted(map(str, set([tw.str_to_atom(f, atomic_domain) for f in goal['goal']]))))
+            if not(skip_duplicate_goals and ghash in goal_hash):
+                goals[agname] = set([tw.str_to_atom(f, atomic_domain) for f in goal['goal']])
+            goal_hash.add(ghash)
 
     # Grab the agent acting fluents for use later on in the phases. Doesn't include initial
     acting_fluents = list(filter(lambda x: 'acting' in str(x.name), atomic_domain.language.predicates))
