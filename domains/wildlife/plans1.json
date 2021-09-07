@@ -21,15 +21,15 @@
             ]
         }
     ],
-    "Racoon": [
+    "Raccoon": [
         {
             "goal": [
-                "on_racoon_g13"
+                "on_raccoon_g13"
             ],
             "plan": [
-                "AnimalMove__g23_g22_racoon",
-                "AnimalMove__g22_g12_racoon",
-                "AnimalMove__g12_g13_racoon"
+                "AnimalMove__g23_g22_raccoon",
+                "AnimalMove__g22_g12_raccoon",
+                "AnimalMove__g12_g13_raccoon"
             ]
         }
     ]
