@@ -23,8 +23,8 @@ def modify_domain(atomic_domain, in_plans, stratified=False, assess=None, skip_d
 
     # Compute the goal from the text description
     goals = {}
-    goal_hash = set()
     for agent in goaldata:
+        goal_hash = set()
         for i, goal in enumerate(goaldata[agent]):
             agname = agent + str(i)
             ghash = '//'.join(sorted(map(str, set([tw.str_to_atom(f, atomic_domain) for f in goal['goal']]))))
