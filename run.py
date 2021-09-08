@@ -37,7 +37,7 @@ def filenames(domain, problem, compilation=None, assess=None):
             assess2 = ""
         else:
             assess2 = "-assess-" + assess
-        return (f"{outdir}/{compilation}-{domain}-domain{assess2}.pddl", f"{outdir}/{compilation}-{domain}-problem{problem}{assess2}.pddl")
+        return (f"{outdir}/{domain}{problem}-{compilation}-domain{assess2}.pddl", f"{outdir}/{domain}-{compilation}-problem{problem}{assess2}.pddl")
     
 def plansfilename(domain, problem):
     # gets name of file with lists of plans for domain and problem
@@ -101,12 +101,12 @@ def compilation(domain, problem, x, assess=None):
     return timed_run(command)
 
 
-def runtests(domain, problem):
-     
-    print(f"Running on problem {problem} of {domain} domain\n")
+def sanitytest(domain, problem):
+    print(f"Running on problem {problem} of {domain} domain")
     
     print("Sanity check: how many side effects are avoided by an empty plan?\n")
-    for x in []:#'fluent', 'plan', 'goal']:
+    for x in [#'fluent', 
+        'plan', 'goal']:
         
         print(f"Assessing the empty plan at {x}-preservation\n")
     
@@ -116,6 +116,10 @@ def runtests(domain, problem):
         else:
             program = None
         planner(domain, problem, x, assess="empty.ipc", prog=program)
+
+def runtests(domain, problem):
+     
+    print(f"Running on problem {problem} of {domain} domain\n")
     
     
     # first, just solve the problem without trying to aviod SEs
@@ -183,16 +187,27 @@ def runtests(domain, problem):
 
 
 if __name__ == '__main__':
+    #sanitytest('storage',1)
+    #sanitytest('storage',2)
+    #sanitytest('storage',3)
+    #sanitytest('zeno',1)
+    #sanitytest('zeno',2)
+    #sanitytest('zeno',3)
+    #sanitytest('floor-tile',1)
+    #sanitytest('floor-tile',2)
+    #sanitytest('floor-tile',3)
+    
+    #sanitytest('wildlife',1)
     
     runtests('wildlife',1)
-    runtests('storage',1)
-    runtests('storage',2)
-    runtests('storage',3)
-    runtests('zeno',1)
-    runtests('zeno',2)
-    runtests('zeno',3)
-    runtests('floor-tile',1)
-    runtests('floor-tile',2)
-    runtests('floor-tile',3)
+    #runtests('storage',1)
+    #runtests('storage',2)
+    #runtests('storage',3)
+    #runtests('zeno',1)
+    #runtests('zeno',2)
+    #runtests('zeno',3)
+    #runtests('floor-tile',1)
+    #runtests('floor-tile',2)
+    #runtests('floor-tile',3)
     
             
