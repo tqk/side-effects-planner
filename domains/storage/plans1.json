@@ -78,11 +78,13 @@
     "hoist1": [
         {
             "goal": [
-                "in_crate0_container0"
+                "in_crate1_depot0"
             ],
             "plan": [               
                 "lift__hoist1_crate0_depot0-2-1_loadarea_depot0", 
-                "drop__hoist1_crate0_container-0-0_loadarea_container0"
+                "drop__hoist1_crate0_container-0-0_loadarea_container0", 
+                "lift__hoist1_crate1_container-0-1_loadarea_container0", 
+                "drop__hoist1_crate1_depot0-2-1_loadarea_depot0"
             ]
         }
     ]

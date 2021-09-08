@@ -84,20 +84,19 @@
     "hoist1": [
         {
             "goal": [
-                "on_crate0_depot0-1-1",
-	            "on_crate1_depot0-2-2"
+                "on_crate0_container-0-1",
+	            "on_crate1_container-0-0"
             ],
             "plan": [
                 "move__hoist1_depot0-1-2_depot0-2-2", 
                 "move__hoist1_depot0-2-2_depot0-2-1", 
                 "go-out__hoist1_depot0-2-1_loadarea", 
                 "lift__hoist1_crate1_container-0-1_loadarea_container0", 
-                "go-in__hoist1_loadarea_depot0-2-1", 
-                "drop__hoist1_crate1_depot0-2-2_depot0-2-1_depot0", 
-                "go-out__hoist1_depot0-2-1_loadarea", 
+                "drop__hoist1_crate1_depot0-2-1_loadarea_depot0", 
                 "lift__hoist1_crate0_container-0-0_loadarea_container0", 
-                "go-in__hoist1_loadarea_depot0-2-1", 
-                "drop__hoist1_crate0_depot0-1-1_depot0-2-1_depot0"
+                "drop__hoist1_crate0_container-0-1_loadarea_container0", 
+                "lift__hoist1_crate1_depot0-2-1_loadarea_depot0", 
+                "drop__hoist1_crate1_container-0-0_loadarea_container0"
             ]
         }
     ]

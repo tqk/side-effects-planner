@@ -54,5 +54,6 @@
 (:goal (and
 	(in crate1 depot0)))
 
+
 )
 
