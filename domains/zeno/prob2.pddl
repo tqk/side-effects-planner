@@ -43,4 +43,5 @@
 (:goal (and 
 	(at person3 city0)
 	))
+
 )

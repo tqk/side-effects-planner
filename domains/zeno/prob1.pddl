@@ -40,9 +40,10 @@
 	(acting plane2)
 	
 )
-(:goal (and ;plane1
+(:goal (and 
 	(at person1 city0))
 )
+
 
 
 )

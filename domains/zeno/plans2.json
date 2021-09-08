@@ -58,13 +58,13 @@
     "plane2": [
         {
             "goal": [
-                "at_person3_city0"
+                "at_person1_city0"
             ],
             "plan": [
                 "fly__plane2_city1_city2_fl2_fl1", 
-                "board__person3_plane2_city2", 
+                "board__person1_plane2_city2", 
                 "fly__plane2_city2_city0_fl1_fl0", 
-                "debark__person3_plane2_city0" 
+                "debark__person1_plane2_city0" 
             ]
         }
     ]
