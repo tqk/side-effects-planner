@@ -83,13 +83,12 @@
     "robot2": [
         {
             "goal": [
-                "painted_tile0-3_black"
+                "painted_tile4-3_black"
             ],
             "plan": [
-                "down__robot2_tile2-2_tile1-2", 
-                "paint-down__robot2_tile0-2_tile1-2_black", 
-                "right__robot2_tile1-2_tile1-3", 
-                "paint-down__robot2_tile0-3_tile1-3_black"
+                "right__robot2_tile2-2_tile2-3", 
+                "up__robot2_tile2-3_tile3-3", 
+                "paint-up__robot2_tile4-3_tile3-3_black" 
             ]
         }
     ]
