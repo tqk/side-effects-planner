@@ -200,14 +200,14 @@ if __name__ == '__main__':
     #sanitytest('wildlife',1)
     
     runtests('wildlife',1)
-    #runtests('storage',1)
-    #runtests('storage',2)
-    #runtests('storage',3)
-    #runtests('zeno',1)
-    #runtests('zeno',2)
-    #runtests('zeno',3)
-    #runtests('floor-tile',1)
-    #runtests('floor-tile',2)
-    #runtests('floor-tile',3)
+    runtests('storage',1)
+    runtests('storage',2)
+    runtests('storage',3)
+    runtests('zeno',1)
+    runtests('zeno',2)
+    runtests('zeno',3)
+    runtests('floor-tile',1)
+    runtests('floor-tile',2)
+    runtests('floor-tile',3)
     
             
