@@ -1,6 +1,6 @@
 # Code for "Planning to Avoid Side Effects"
 
-The code was run on a Linux machine and may not run on other operating systems. 
+The code was run on a Linux machine and may not run on other operating systems. To set up the dependencies, you can use docker (https://www.docker.com/) with the provided Dockerfile.
 
 To run the experiments reported in the paper, execute
 
@@ -8,7 +8,7 @@ To run the experiments reported in the paper, execute
 
 This will write various files to the ./logs and ./outputs directories, but all the important information is in the output of the command. For each domain X and problem Y, the output will include
 
-> Running on problem X of Y domain
+> Running on problem Y of X domain
 
 and then lines describing the various types of plans it finds and how well they do at avoiding side effects. 
 
