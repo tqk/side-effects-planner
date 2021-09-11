@@ -1,6 +1,6 @@
 # Code for "Planning to Avoid Side Effects"
 
-The code was run on a Linux machine and may not run on other operating systems. To set up the dependencies, you can use docker (https://www.docker.com/) with the provided Dockerfile. Note that the fluent-, policy, and goal-preserving compilations heavily rely on the [Tarski](https://github.com/aig-upf/tarski) library.
+The code was run on a Linux machine and may not run on other operating systems. To set up the dependencies, you can use docker (https://www.docker.com/) with the provided Dockerfile. Note that the fluent-, policy-, and goal-preserving compilations heavily rely on the [Tarski](https://github.com/aig-upf/tarski) library.
 
 To run the experiments reported in the paper, execute
 
