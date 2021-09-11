@@ -1,4 +1,5 @@
-;;Created by Tomas de la Rosa
+;;Original domain by Tomas de la Rosa
+;;modified by Anonymous
 ;;Domain for painting floor tiles with two colors
 
 (define (domain floor-tile)
