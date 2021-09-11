@@ -73,3 +73,5 @@ After performing those assessments of the standard plan, a fluent-preserving pla
 The first time reported is compilation time, and the second is planning time on the compilation. The cost (13) of the plan on the compiled problem is the number of FSEs it has. The fluent-preserving plan is then also assessed for how well it avoids PSEs and GSEs (similarly to how the standard plan was). 
 
 Finally, policy-preserving and goal-preserving plans are found as well. The outputs about them can be intepreted analogously to the outputs for the fluent-preserving plan.
+
+Note: When using the fluent-, policy-, or goal-preserving compilations, the order in which some things are written in the output files (e.g., the order fluents are listed in the initial state) may vary from compilation run to compilation run (because of how python iterates through some data structures). This may affect the tie-breaking used by planning software in selecting actions. So multiple runs of the experiments are not guaranteed to give identical results.
