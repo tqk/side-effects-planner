@@ -9,7 +9,8 @@
 
 
 ; IPC5 Domain: Storage Propositional
-; Authors: Alfonso Gerevini and Alessandro Saetti 
+; Original authors: Alfonso Gerevini and Alessandro Saetti 
+; modified by Anonymous
 
 (define (domain Storage-Propositional)
 (:requirements :typing)
