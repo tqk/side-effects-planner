@@ -3,10 +3,6 @@
 
 
     ; Domain: Cranes are agents that lift/lower crates and move around rooms+halls
-    
-    ; Relevance: Can augment to have cranes only able to lift certain crates, and
-    ;  this would cause the opportunitiy for necessary crates being left stuck at
-    ;  the bottom of the stack.
 
 
 
