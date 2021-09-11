@@ -5,9 +5,6 @@
 
     ; Domain: Moving people on/off airplains that fly around and refuel
 
-    ; Relevance: Can potentially add a pilot persona for the agent, and
-    ;  they can leave planes around the place
-
 
 
 
