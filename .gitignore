@@ -14,7 +14,6 @@ sas_plan
 
 plan.ipc
 
-domains/*/*.json
 logs/*.ipc*
 outputs/*.ipc*
 outputs/*.pddl
