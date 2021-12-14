@@ -10,10 +10,10 @@ This will write various files to the ./logs and ./outputs directories, but all t
 
 > Running on problem Y of X domain
 
-and then lines describing the various types of plans it finds and how well they do at avoiding side effects. 
+and then lines describing the various types of plans it finds and how well they do at avoiding side effects. Note that in the code the names of the problems are just numbers (e.g., 1, 2, 3, ...), but in the table in the paper the problems are given alphanumeric names (e.g. the five storage problems are named a, b, c, c2, and c3). 
 
 
-To illustrate, consider how the output might start for the first (and only) problem in the wildlife domain:
+To illustrate the output format, consider how the output might start for the first (and only) problem in the wildlife domain:
 
 > Running on problem 1 of wildlife domain                                                                                                                    
 >                                                                                                                                         
