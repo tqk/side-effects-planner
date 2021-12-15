@@ -1,7 +1,7 @@
 FROM aiplanning/planutils:latest
 
 #maintainer information
-LABEL maintainer="Anonymous"
+LABEL maintainer="Christian Muise (christian.muise@queensu.ca)"
 
 # update the apt package manager
 RUN apt-get update
